@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<link rel="manifest" href="manifest.json"><meta name="theme-color" content="#17110b"><link rel="apple-touch-icon" href="icon-192.png"><meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Groupe et marques</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap">
+<style>
+/* Layout: header · 4 tabs (Marques · Pull et annonces · Ton kit · Stream Deck), each fits about one screen on a monitor. Parchment theme shared with the dungeon sheets. */
+:root {
+  color-scheme: dark;
+  --bg: #17110b; --text: #2a1c0e; --muted: #6f5536; --soft: #3d2b17; --line: #b8975c;
+  --tank: #1d5fae; --quest: #8a4f0c; --ok: #2c7a43; --boss: #a3271d; --say: #7a4a00;
+  --gold: #d9b45c; --gold-hi: #f3d88f; --gold-lo: #8a6a2c; --ink: #1c140b; --key: #241a10;
+  --title: Cinzel, Georgia, serif; --body: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { background: var(--bg); }
+body { margin: 0; color: var(--text); font-family: var(--body); font-size: 15.5px; line-height: 1.45;
+  background-image: radial-gradient(ellipse at 50% -10%, rgba(120,72,28,.35), transparent 60%), radial-gradient(ellipse at 50% 120%, rgba(0,0,0,.6), transparent 55%); background-attachment: fixed;
+  padding: 16px max(16px, env(safe-area-inset-right, 0px)) 32px max(16px, env(safe-area-inset-left, 0px)); }
+.wrap { max-width: 1240px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; }
+.back { color: var(--gold); font-size: 13.5px; text-decoration: none; font-weight: 600; }
+.back:hover { color: var(--gold-hi); }
+h1 { font-family: var(--title); font-weight: 700; color: var(--gold-hi); font-size: clamp(28px, 3.6vw, 42px); line-height: 1.05; margin: 4px 0 0; text-shadow: 0 1px 0 #3a2508, 0 0 18px rgba(217,180,92,.35); text-wrap: balance; }
+.sub { color: #a8916c; margin-top: 6px; max-width: 75ch; }
+nav.tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--gold-lo); overflow-x: auto; }
+nav.tabs button { font: 700 15.5px var(--body); color: #c9b28a; background: none; border: 0; border-bottom: 3px solid transparent; padding: 9px 14px; cursor: pointer; white-space: nowrap; }
+nav.tabs button[aria-selected="true"] { color: var(--gold-hi); border-bottom-color: var(--gold); }
+button:focus-visible, a:focus-visible { outline: 2px solid var(--gold-hi); outline-offset: 2px; }
+.view { display: none; flex-direction: column; gap: 14px; }
+.view.on { display: flex; }
+.parch { background: linear-gradient(180deg, #f3e7c8, #ead8ad); border: 1px solid var(--gold-lo); border-radius: 8px; color-scheme: light;
+  box-shadow: inset 0 0 0 1px rgba(255,246,215,.55), inset 0 0 22px rgba(140,95,35,.22), 0 2px 8px rgba(0,0,0,.45); padding: 12px 15px; min-width: 0; }
+.parch h2 { font-family: var(--title); font-size: 18px; margin: 0 0 8px; }
+.parch h3 { font-size: 12.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--quest); margin: 0 0 4px; }
+.parch p { margin: 0 0 6px; color: var(--soft); }
+.parch p:last-child { margin-bottom: 0; }
+.grid2 { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 14px; align-items: start; }
+.grid3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; align-items: start; }
+ul, ol { margin: 0; padding-left: 20px; color: var(--soft); }
+li { margin: 3px 0; }
+table { width: 100%; border-collapse: collapse; }
+th { text-align: left; font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); padding: 5px 6px; border-bottom: 1px solid var(--line); }
+td { padding: 7px 6px; border-bottom: 1px dashed rgba(138,106,44,.45); vertical-align: top; color: var(--soft); }
+tr:last-child td { border-bottom: 0; }
+td b { color: var(--text); }
+.mk { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; color: var(--text); white-space: nowrap; }
+.mk svg { width: 24px; height: 24px; flex: none; }
+.say { display: flex; gap: 10px; align-items: center; justify-content: space-between; padding: 7px 0; border-bottom: 1px dashed rgba(138,106,44,.45); }
+.say:last-child { border-bottom: 0; }
+.say q { color: var(--say); font-style: italic; quotes: "« " " »"; }
+.say .when { display: block; font-size: 12px; color: var(--muted); font-weight: 600; }
+.copy { flex: none; font: 700 12px var(--body); color: var(--text); background: rgba(120,85,40,.14); border: 1px solid var(--gold-lo); border-radius: 6px; padding: 5px 9px; cursor: pointer; }
+.copy.done { background: var(--ok); color: #fff; border-color: var(--ok); }
+.lv { display: inline-block; font-size: 11px; font-weight: 800; color: var(--muted); border: 1px solid var(--line); border-radius: 5px; padding: 0 5px; margin-left: 4px; font-variant-numeric: tabular-nums; }
+.later { opacity: .5; }
+.later .lv { color: var(--boss); border-color: var(--boss); }
+.note { font-size: 13px; color: var(--muted); }
+code { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 13px; background: rgba(120,85,40,.14); border-radius: 4px; padding: 1px 5px; color: var(--text); white-space: pre-wrap; }
+.deck { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; background: #0d0a06; border-radius: 14px; padding: 12px; border: 1px solid var(--gold-lo); }
+.k { aspect-ratio: 1; max-width: 100%; border-radius: 10px; background: var(--key); border: 1px solid #3a2a16; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; text-align: center; padding: 4px; color: #ecd9b0; font-size: 11.5px; font-weight: 700; line-height: 1.15; }
+.k svg { width: 42%; height: auto; }
+.k small { color: #a8916c; font-weight: 600; font-size: 10px; }
+.k.say2 { background: #2a1d0b; color: #f3d88f; }
+.k.sys { background: #1a2230; color: #cfe0f5; }
+.k .big { font-size: 20px; line-height: 1; }
+.steps { counter-reset: s; list-style: none; padding: 0; }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 8px; margin: 6px 0; }
+.steps li::before { content: counter(s); width: 24px; height: 24px; border-radius: 50%; background: var(--quest); color: #fff; font-weight: 800; font-size: 13px; display: inline-flex; align-items: center; justify-content: center; }
+.foot { color: #a8916c; font-size: 12.5px; }
+.foot a { color: var(--gold); }
+@media (max-width: 980px) { .grid2, .grid3 { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 520px) { .deck { gap: 5px; padding: 8px; } .k { font-size: 9.5px; border-radius: 7px; } .k small { display: none; } .k .big { font-size: 15px; } }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+<div class="wrap">
+  <div>
+    <a class="back" href="index.html">← Accueil des fiches</a>
+    <h1>Groupe et marques</h1>
+    <div class="sub">Mener le groupe en tank Guerrier : marquer les cibles, répartir les contrôles, annoncer les pulls, et tout faire depuis le Stream Deck sans toucher à tes touches 1 à 4.</div>
+  </div>
+
+  <nav class="tabs" role="tablist" aria-label="Sections">
+    <button role="tab" id="t-marques" aria-controls="v-marques" aria-selected="true">Marques</button>
+    <button role="tab" id="t-pull" aria-controls="v-pull" aria-selected="false">Pull et annonces</button>
+    <button role="tab" id="t-kit" aria-controls="v-kit" aria-selected="false">Ton kit</button>
+    <button role="tab" id="t-deck" aria-controls="v-deck" aria-selected="false">Stream Deck</button>
+  </nav>
+
+  <!-- MARQUES -->
+  <section class="view on" id="v-marques" role="tabpanel" aria-labelledby="t-marques">
+    <div class="grid2">
+      <div class="parch">
+        <h2>Ce que veut dire chaque marque</h2>
+        <table>
+          <thead><tr><th>Marque</th><th>Rôle</th><th>Sur qui</th></tr></thead>
+          <tbody>
+            <tr><td><span class="mk" data-m="skull">Crâne</span></td><td><b>Tuer en premier</b></td><td>Soigneurs, lanceurs de sorts, mobs qui fuient ou appellent de l'aide.</td></tr>
+            <tr><td><span class="mk" data-m="cross">Croix</span></td><td><b>Tuer en deuxième</b></td><td>Le prochain plus dangereux.</td></tr>
+            <tr><td><span class="mk" data-m="moon">Lune</span></td><td>Métamorphose (mage)</td><td>Humanoïdes et bêtes.</td></tr>
+            <tr><td><span class="mk" data-m="square">Carré</span></td><td>Piège givrant (chasseur)</td><td>Presque tout, sauf les élites immunisés.</td></tr>
+            <tr><td><span class="mk" data-m="diamond">Losange</span></td><td>Bannir ou Peur (démoniste)</td><td>Bannir : démons et élémentaires. Peur : le reste, s'il y a de la place.</td></tr>
+            <tr><td><span class="mk" data-m="star">Étoile</span></td><td>Assommer (voleur)</td><td>Humanoïdes, avant le combat seulement.</td></tr>
+            <tr><td><span class="mk" data-m="triangle">Triangle</span></td><td>Entraves (prêtre)</td><td>Morts-vivants.</td></tr>
+            <tr><td><span class="mk" data-m="circle">Cercle</span></td><td>Hibernation (druide) ou 3ᵉ cible</td><td>Bêtes et dragons. Sans druide, le cercle sert de troisième cible à tuer.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px;min-width:0">
+        <div class="parch">
+          <h2>Marquer un pack en 5 secondes</h2>
+          <ol class="steps">
+            <li><span>Repère le soigneur ou le lanceur de sorts : <b>crâne</b>.</span></li>
+            <li><span>Le suivant le plus dangereux : <b>croix</b>.</span></li>
+            <li><span>S'il reste 3 mobs ou plus, donne un contrôle à chaque classe présente (lune, carré, losange…).</span></li>
+            <li><span>Pas de contrôle dans le groupe ? Crâne et croix suffisent, tu gardes le reste avec tes cris et Coup de tonnerre.</span></li>
+          </ol>
+          <p class="note">Sur les packs faciles, ne marque que le crâne : tu gagnes du temps et le groupe suit quand même.</p>
+        </div>
+        <div class="parch">
+          <h2>Qui contrôle quoi</h2>
+          <table>
+            <thead><tr><th>Type de mob</th><th>Contrôles qui marchent</th></tr></thead>
+            <tbody>
+              <tr><td><b>Humanoïde</b></td><td>Lune, étoile (hors combat), carré, losange (peur)</td></tr>
+              <tr><td><b>Bête</b></td><td>Lune, carré, cercle</td></tr>
+              <tr><td><b>Démon, élémentaire</b></td><td>Losange (bannir), carré</td></tr>
+              <tr><td><b>Mort-vivant</b></td><td>Triangle, carré</td></tr>
+              <tr><td><b>Dragon</b></td><td>Cercle, carré</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PULL ET ANNONCES -->
+  <section class="view" id="v-pull" role="tabpanel" aria-labelledby="t-pull">
+    <div class="grid2">
+      <div class="parch">
+        <h2>Le pull parfait</h2>
+        <ol class="steps">
+          <li><span><b>Regarde</b> : combien de mobs, lesquels soignent ou lancent des sorts, où passe la patrouille.</span></li>
+          <li><span><b>Marque</b> les cibles et annonce les contrôles au mage, au démoniste ou au chasseur.</span></li>
+          <li><span><b>Vérifie</b> la mana du heal et que le groupe est derrière toi.</span></li>
+          <li><span><b>Tire</b> avec ton arme à distance, puis recule derrière un angle de mur : les lanceurs de sorts viennent à toi.</span></li>
+          <li><span><b>Place-toi</b> dos au mur, les mobs dos au groupe. Ne bouge plus sauf danger au sol.</span></li>
+          <li><span><b>Laisse</b> 2 ou 3 coups avant que les DPS tapent, et dis-le au groupe au début.</span></li>
+        </ol>
+        <h3 style="margin-top:10px">Ce qui fait wiper</h3>
+        <table>
+          <tbody>
+            <tr><td><b>Un lanceur de sorts reste loin</b></td><td>Pull derrière un angle, ou Coup de bouclier pour qu'il s'approche.</td></tr>
+            <tr><td><b>Un mob fuit à faible vie</b></td><td>Le crâner bas et le finir, il ramène souvent un pack (Brise-genou pour le ralentir).</td></tr>
+            <tr><td><b>Le heal prend l'aggro</b></td><td>Provocation sur le mob, puis Fracasser armure. Demande au heal d'attendre 2 s au début.</td></tr>
+            <tr><td><b>Une patrouille rejoint</b></td><td>Attends qu'elle passe, ou tue-la seule d'abord.</td></tr>
+            <tr><td><b>Un pack en plus</b></td><td>Cri de défi, Cri démoralisant, Mur protecteur, et demande un contrôle.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="parch">
+        <h2>Tes annonces, prêtes à copier</h2>
+        <div class="say"><span><span class="when">En arrivant dans le groupe</span><q>Salut ! Je suis tank, je vais tranquille. Je marque : crâne en premier, croix ensuite. Laissez-moi 2 secondes au début de chaque pull.</q></span><button class="copy">Copier</button></div>
+        <div class="say"><span><span class="when">Répartir les contrôles</span><q>Mage : mouton sur la lune. Chasseur : piège sur le carré. Démo : le losange. On tue le crâne, puis la croix.</q></span><button class="copy">Copier</button></div>
+        <div class="say"><span><span class="when">Avant de tirer</span><q>Je tire et je recule derrière l'angle, attendez qu'ils viennent.</q></span><button class="copy">Copier</button></div>
+        <div class="say"><span><span class="when">Le heal est bas en mana</span><q>Pause mana pour le heal, on repart dans 20 secondes.</q></span><button class="copy">Copier</button></div>
+        <div class="say"><span><span class="when">Un DPS tape trop tôt</span><q>Attendez mon deuxième coup avant de taper, sinon je ne peux pas tenir l'aggro.</q></span><button class="copy">Copier</button></div>
+        <div class="say"><span><span class="when">Avant un boss</span><q>Boss : je le tourne dos au groupe, sortez des zones au sol. Prêts ?</q></span><button class="copy">Copier</button></div>
+        <div class="say"><span><span class="when">Après un wipe</span><q>Pas grave, c'est sur moi. On recommence en tirant plus loin.</q></span><button class="copy">Copier</button></div>
+        <p class="note" style="margin-top:8px">Les annonces propres à chaque donjon sont dans la fiche du donjon, onglet Route et pulls.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TON KIT -->
+  <section class="view" id="v-kit" role="tabpanel" aria-labelledby="t-kit">
+    <p class="sub" style="margin:0">Les sorts au-dessus de ton niveau sont grisés (niveau pris sur l'accueil : <b id="mylv">14</b>). Les talents sont marqués « talent ».</p>
+    <div class="grid3">
+      <div class="parch">
+        <h2>Sur une cible</h2>
+        <ol class="steps">
+          <li data-lv="4"><span>Charge pour engager <span class="lv">4</span>, ou Tir si tu dois tirer derrière un angle. Avec le talent Avant-garde, tu charges en posture défensive.</span></li>
+          <li data-lv="10"><span>Posture défensive <span class="lv">10</span> : tu y restes tout le donjon.</span></li>
+          <li data-lv="14"><span>Revanche dès qu'elle s'allume <span class="lv">14</span>.</span></li>
+          <li data-lv="40"><span>Heurt de bouclier <span class="lv">talent</span> : gros coup et il retire un effet magique de la cible.</span></li>
+          <li data-lv="10"><span>Fracasser armure en boucle, jusqu'à 5 <span class="lv">10</span>.</span></li>
+          <li data-lv="4"><span>Pourfendre sur la cible : sur Forever, il monte avec ta puissance d'attaque <span class="lv">4</span>.</span></li>
+          <li data-lv="1"><span>Frappe héroïque seulement si ta rage déborde <span class="lv">1</span>.</span></li>
+        </ol>
+      </div>
+      <div class="parch">
+        <h2>Sur un pack</h2>
+        <ol class="steps">
+          <li data-lv="10"><span>Rage sanguinaire avant le pull <span class="lv">10</span>.</span></li>
+          <li data-lv="6"><span>Coup de tonnerre <span class="lv">6</span>, puis retour en défensive si tu as dû changer de posture.</span></li>
+          <li data-lv="14"><span>Cri démoralisant <span class="lv">14</span> : menace sur tout le pack, et ils tapent moins fort.</span></li>
+          <li data-lv="10"><span>Fracasser armure sur le crâne, puis Tab et 1 ou 2 Fracasser sur la croix.</span></li>
+          <li data-lv="20"><span>Enchaînement à la place de Frappe héroïque <span class="lv">20</span>.</span></li>
+          <li data-lv="1"><span>Garde Cri de guerre actif en permanence <span class="lv">1</span>.</span></li>
+        </ol>
+        <h3 style="margin-top:10px">Reprendre un mob</h3>
+        <ul>
+          <li data-lv="10">Provocation <span class="lv">10</span> : un mob qui part sur le heal. 10 s de recharge.</li>
+          <li data-lv="26">Cri de défi <span class="lv">26</span> : tout le pack revient sur toi 6 s. Ton joker.</li>
+          <li data-lv="12">Coup de bouclier <span class="lv">12</span> : interrompt un sort.</li>
+        </ul>
+      </div>
+      <div class="parch">
+        <h2>Tes boutons de secours</h2>
+        <table>
+          <tbody>
+            <tr data-lv="16"><td><b>Maîtrise du blocage</b> <span class="lv">16</span></td><td>Sur les grosses frappes physiques, et pour déclencher Revanche.</td></tr>
+            <tr data-lv="14"><td><b>Cri démoralisant</b> <span class="lv">14</span></td><td>Toujours actif sur un pack, il réduit tous leurs dégâts.</td></tr>
+            <tr data-lv="28"><td><b>Mur protecteur</b> <span class="lv">28</span></td><td>Pull qui tourne mal ou boss qui frappe fort : avant d'être bas.</td></tr>
+            <tr data-lv="30"><td><b>Dernier rempart</b> <span class="lv">talent</span></td><td>Vie sous 20 % : de la vie en plus pendant 20 s, le temps que le heal rattrape.</td></tr>
+            <tr data-lv="32"><td><b>Rage berserker</b> <span class="lv">32</span></td><td>Contre la peur. Demande la posture berserker : change, appuie, reviens.</td></tr>
+            <tr data-lv="1"><td><b>Potion de soins, bandage</b></td><td>Toujours dans la barre, le heal n'est pas infini.</td></tr>
+          </tbody>
+        </table>
+        <p class="note" style="margin-top:8px">Règle d'or : on utilise un bouton de secours <b>avant</b> d'être bas, pas quand il est trop tard.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STREAM DECK -->
+  <section class="view" id="v-deck" role="tabpanel" aria-labelledby="t-deck">
+    <div class="grid2">
+      <div style="display:flex;flex-direction:column;gap:10px;min-width:0">
+        <div class="deck" aria-label="Disposition proposée pour un Stream Deck de 15 touches">
+          <div class="k" data-k="skull"></div><div class="k" data-k="cross"></div><div class="k" data-k="moon"></div><div class="k" data-k="square"></div><div class="k" data-k="diamond"></div>
+          <div class="k" data-k="star"></div><div class="k" data-k="triangle"></div><div class="k" data-k="circle"></div><div class="k sys"><span class="big">✕</span>Effacer<small>Ctrl Maj F9</small></div><div class="k sys"><span class="big">✓</span>Appel prêt<small>/readycheck</small></div>
+          <div class="k say2"><span class="big">💬</span>Salut tank<small>annonce</small></div><div class="k say2"><span class="big">💬</span>Contrôles<small>annonce</small></div><div class="k say2"><span class="big">⏳</span>Pull 3 s<small>annonce</small></div><div class="k say2"><span class="big">💧</span>Pause mana<small>annonce</small></div><div class="k say2"><span class="big">⚑</span>Boss<small>annonce</small></div>
+        </div>
+        <p class="note">Disposition pour le Stream Deck classique (15 touches). Sur un Mini (6 touches), garde crâne, croix, lune, carré, effacer et pull 3 s. Sur un XL, ajoute une rangée d'annonces de donjon.</p>
+      </div>
+      <div class="parch">
+        <h2>Le mettre en place</h2>
+        <h3>1 · Dans le jeu : des raccourcis pour les marques</h3>
+        <p>Options › Raccourcis, section Ciblage : chaque marque a sa ligne « Attribuer l'icône de raid ». Donne-leur des touches que tu n'utilises jamais : <b>Ctrl + Maj + F1</b> pour le crâne jusqu'à <b>F8</b>, comme sur le schéma. La marque se pose sur ta cible.</p>
+        <p class="note">Pour marquer le mob sous ta souris sans le cibler, fais plutôt une macro par marque et lie-la à la même touche, par exemple pour le crâne : <code>/tm [@mouseover,exists][] 8</code>. Numéros : 8 crâne, 7 croix, 6 carré, 5 lune, 4 triangle, 3 losange, 2 cercle, 1 étoile. Pour la touche Effacer : <code>/tm [@mouseover,exists][] 0</code>. À tester en jeu, la syntaxe peut varier sur Forever.</p>
+        <h3 style="margin-top:10px">2 · Dans le Stream Deck : une action Raccourci par marque</h3>
+        <p>Glisse l'action <b>Système › Raccourci clavier</b> sur la touche, et tape la combinaison (Ctrl + Maj + F1…). Mets l'image de la marque comme icône : les 8 icônes de ce schéma conviennent.</p>
+        <h3 style="margin-top:10px">3 · Les annonces : une action Multi-actions</h3>
+        <p>Une touche = <b>Entrée</b> (ouvre le chat), puis l'action <b>Texte</b> avec ton message et l'option « Envoyer Entrée ». Commence le texte par <code>/g </code> pour le groupe. Les textes sont dans l'onglet Pull et annonces.</p>
+        <p class="note">« Pull 3 s » : <code>/g Pull dans 3 secondes</code>. Si tu installes un addon de boss (Deadly Boss Mods), <code>/pull 3</code> affiche un vrai compte à rebours pour tout le groupe.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="foot">D'après ta fiche tanking Guerrier, mise à jour pour Forever avec le guide Protection de <a href="https://www.warcrafttavern.com/forever/guides/protection-warrior/" target="_blank" rel="noopener">Warcraft Tavern</a> et le guide de montée en niveau de <a href="https://www.method.gg/wow-forever/wow-forever-warrior-leveling-guide-and-talents" target="_blank" rel="noopener">Method</a>. Les noms de sorts sont ceux du client français ; quelques-uns peuvent différer sur Forever.</div>
+</div>
+
+<script>
+(function () {
+  var M = {
+    skull: ['Crâne', '<svg viewBox="0 0 24 24"><path d="M12 2C7 2 4 5.6 4 10c0 2.6 1.2 4.4 3 5.4V19h2.2v-2h1.6v2h2.4v-2h1.6v2H17v-3.6c1.8-1 3-2.8 3-5.4 0-4.4-3-8-8-8z" fill="#f4efe4" stroke="#3a2f22" stroke-width="1"/><circle cx="9" cy="10.5" r="2" fill="#2a1c0e"/><circle cx="15" cy="10.5" r="2" fill="#2a1c0e"/><path d="M12 13l-1.2 2h2.4z" fill="#2a1c0e"/></svg>'],
+    cross: ['Croix', '<svg viewBox="0 0 24 24"><path d="M5 3l7 7 7-7 2 2-7 7 7 7-2 2-7-7-7 7-2-2 7-7-7-7z" fill="#d8352a" stroke="#5a120c" stroke-width="1"/></svg>'],
+    moon: ['Lune', '<svg viewBox="0 0 24 24"><path d="M15 2.5A9.5 9.5 0 1 0 21.5 15 7.5 7.5 0 0 1 15 2.5z" fill="#c9d6e6" stroke="#4a5a70" stroke-width="1"/></svg>'],
+    square: ['Carré', '<svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="1.5" fill="#2f7fe0" stroke="#0e2f5a" stroke-width="1"/></svg>'],
+    diamond: ['Losange', '<svg viewBox="0 0 24 24"><path d="M12 2l8 10-8 10-8-10z" fill="#a54fd8" stroke="#3d1258" stroke-width="1"/></svg>'],
+    star: ['Étoile', '<svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.2 5.8 20.9l1.6-7L2 9.2l7.1-.6z" fill="#f5cf2e" stroke="#6b5200" stroke-width="1"/></svg>'],
+    triangle: ['Triangle', '<svg viewBox="0 0 24 24"><path d="M12 3l10 18H2z" fill="#3fb34f" stroke="#124a1a" stroke-width="1"/></svg>'],
+    circle: ['Cercle', '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="#f0882a" stroke="#5a2e06" stroke-width="1"/></svg>']
+  };
+  var KEYS = { skull: 'F1', cross: 'F2', moon: 'F3', square: 'F4', diamond: 'F5', star: 'F6', triangle: 'F7', circle: 'F8' };
+  document.querySelectorAll('.mk[data-m]').forEach(function (el) { el.insertAdjacentHTML('afterbegin', M[el.dataset.m][1]); });
+  document.querySelectorAll('.k[data-k]').forEach(function (el) { var m = M[el.dataset.k]; el.innerHTML = m[1] + m[0] + '<small>Ctrl Maj ' + KEYS[el.dataset.k] + '</small>'; });
+
+  var tabs = document.querySelectorAll('nav.tabs button');
+  function show(id) {
+    tabs.forEach(function (t) {
+      var on = t.id === 't-' + id; t.setAttribute('aria-selected', on);
+      document.getElementById(t.getAttribute('aria-controls')).classList.toggle('on', on);
+    });
+    try { localStorage.setItem('wow-groupe-tab', id); } catch (e) {}
+  }
+  tabs.forEach(function (t) { t.addEventListener('click', function () { show(t.id.slice(2)); }); });
+  try { var s = localStorage.getItem('wow-groupe-tab'); if (s && document.getElementById('t-' + s)) show(s); } catch (e) {}
+
+  var lv = 14;
+  try { lv = parseInt(localStorage.getItem('wow-level'), 10) || 14; } catch (e) {}
+  document.getElementById('mylv').textContent = lv;
+  document.querySelectorAll('[data-lv]').forEach(function (el) { if (parseInt(el.dataset.lv, 10) > lv) el.classList.add('later'); });
+
+  document.querySelectorAll('.copy').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var q = b.parentNode.querySelector('q'), txt = q.textContent;
+      function ok() { b.textContent = 'Copié'; b.classList.add('done'); setTimeout(function () { b.textContent = 'Copier'; b.classList.remove('done'); }, 1500); }
+      function sel() { var r = document.createRange(); r.selectNodeContents(q); var s = getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent = 'Sélectionné'; }
+      try { navigator.clipboard.writeText(txt).then(ok, sel); } catch (e) { sel(); }
+    });
+  });
+})();
+</script>
+<script>if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(function(){});</script></html>
