@@ -99,7 +99,7 @@ tr.got td:not(.have) { opacity: .5; }
   <section class="pal parch" id="pal" aria-live="polite"></section>
 
   <div class="legend"><span class="t d">Donjon</span> butin d'un boss <span class="t q">Quête</span> récompense <span class="t c">Artisanat</span> à fabriquer ou acheter à l'hôtel des ventes <span class="t v">Vendeur</span> achat en ville</div>
-  <div class="foot">Sources : liste d'équipement Protection de <a href="https://timesaver.gg/tools/wow-forever/leveling-gear/warrior/protection" target="_blank" rel="noopener">timesaver.gg</a> (relevée le 6 novembre 2026), complétée par <a href="https://www.method.gg/wow-forever/wow-forever-warrior-leveling-guide-and-talents" target="_blank" rel="noopener">Method</a>, <a href="https://www.warcrafttavern.com/forever/guides/protection-warrior/" target="_blank" rel="noopener">Warcraft Tavern</a> et le butin des fiches donjon. J'ai ajouté les butins des donjons ouverts à la Horde que la liste ne met que côté Alliance. Les noms sont en anglais quand je ne suis pas sûr du nom français : chaque objet ouvre une recherche Wowhead Forever en français, qui donne le vrai nom et les stats.</div>
+  <div class="foot">Sources : liste d'équipement Protection de <a href="https://timesaver.gg/tools/wow-forever/leveling-gear/warrior/protection" target="_blank" rel="noopener">timesaver.gg</a> (relevée le 6 novembre 2026), complétée par le <a href="https://kami-labs.fr/bis-list-wow-forever/" target="_blank" rel="noopener">planificateur BiS de Kami Labs</a> pour le palier « BiS donjons », <a href="https://www.method.gg/wow-forever/wow-forever-warrior-leveling-guide-and-talents" target="_blank" rel="noopener">Method</a>, <a href="https://www.warcrafttavern.com/forever/guides/protection-warrior/" target="_blank" rel="noopener">Warcraft Tavern</a> et le butin des fiches donjon. J'ai ajouté les butins des donjons ouverts à la Horde que la liste ne met que côté Alliance. Les noms sont en anglais quand je ne suis pas sûr du nom français : chaque objet ouvre une recherche Wowhead Forever en français, qui donne le vrai nom et les stats.</div>
 </div>
 
 <script>
@@ -194,7 +194,7 @@ tr.got td:not(.have) { opacity: .5; }
         ['Bijou 2', 'Frozen Heart of the Mountain', 'Frozen Heart of the Mountain', 'c', 'Enchantement', 50, 'Gardé au 60.']
       ] },
     { id: 'p60', from: 60, to: 60, label: '60', title: 'Niveau 60 : avant les raids',
-      intro: "La liste pré-raid de Forever s'appuie beaucoup sur la forge. Si tu n'es pas forgeron, ces pièces se commandent à un artisan ou s'achètent à l'hôtel des ventes. Les raids ouvrent le 9 décembre : on fera une page dédiée à ce moment-là.",
+      intro: "La liste pré-raid de Forever s'appuie beaucoup sur la forge. Tu es forgeron : la plupart se fabriquent toi-même, et tu monteras ta Forge en même temps. Les raids ouvrent le 9 décembre : on fera une page dédiée à ce moment-là.",
       rows: [
         ['Tête', 'Heaume cœur-de-lion', 'Lionheart Helm', 'c', 'Forge', 60, ''],
         ['Cou', "Beads of Ogre Might", 'Beads of Ogre Might', 'q', "Quête « Falrin's Vendetta », Hache-Tripes", 58, ''],
@@ -213,6 +213,27 @@ tr.got td:not(.have) { opacity: .5; }
         ['Arme', 'Greenhammer', 'Greenhammer', 'c', 'Forge', 60, ''],
         ['Bouclier', 'Evergreen Shield', 'Evergreen Shield', 'c', 'Forge', 60, ''],
         ['Distance', 'Core Marksman Rifle', 'Core Marksman Rifle', 'c', 'Ingénierie', 60, '']
+      ] },
+    { id: 'p60b', from: 99, to: 99, label: '60 · BiS donjons', title: 'Niveau 60 : la BiS de donjon (Kami Labs)',
+      intro: "Le meilleur équipement pré-raid de donjon selon le planificateur BiS de Kami Labs (calculé le 9 novembre). Trois pièces Alliance sont remplacées par leur équivalent Horde de la liste précédente. Tu es forgeron : Éloquente se fabrique à Forge 300.",
+      rows: [
+        ['Tête', 'Casque de vaillance', 'Casque de vaillance', 'd', 'Scholomance, Sombre Maître Gandling', 60, ''],
+        ['Cou', 'Pendentif de mauvais œil', 'Pendentif de mauvais œil', 'd', 'Hache-Tripes, Immol\'thar', 60, ''],
+        ['Épaules', 'Imperial Plate Shoulders', 'Imperial Plate Shoulders', 'c', 'Forge', 60, 'La BiS de Kami Labs (Spallières des Hautes-terres en plaque) est réservée à l\'Alliance.'],
+        ['Dos', 'Cape de la gargouille peau-de-pierre', 'Cape de la gargouille peau-de-pierre', 'd', 'Stratholme', 60, ''],
+        ['Torse', 'Pansière de Kromcrush', 'Pansière de Kromcrush', 'd', 'Hache-Tripes, Capitaine Kromcrush', 60, ''],
+        ['Poignets', 'Brassards de vaillance', 'Brassards de vaillance', 'd', 'Pic Blackrock inférieur, Intendant Zigris', 60, ''],
+        ['Mains', 'Gantelets de diablosaure', 'Gantelets de diablosaure', 'c', 'Travail du cuir', 60, 'La BiS de Kami Labs (Gantelets de Theramore) demande une réputation Alliance.'],
+        ['Taille', 'Sangle des vaillants', 'Sangle des vaillants', 'v', 'Pix Xizzix, vallée de Strangleronce (100 Réal de Terremine terni)', 60, ''],
+        ['Jambes', 'Jambières de vaillance', 'Jambières de vaillance', 'd', 'Stratholme, Baron Rivendare', 60, ''],
+        ['Pieds', 'Imperial Plate Boots', 'Imperial Plate Boots', 'c', 'Forge', 60, 'La BiS de Kami Labs (Grèves des Hautes-terres en plaque) est réservée à l\'Alliance.'],
+        ['Anneau 1', 'Anneau de chair', 'Anneau de chair', 'd', 'Stratholme, Ramstein Grandgosier', 60, ''],
+        ['Anneau 2', 'Anneau du roi ogre', 'Anneau du roi ogre', 'd', 'Hache-Tripes, Roi Gordok', 60, ''],
+        ['Bijou 1', 'Stabilisateur de poigne de défense', 'Stabilisateur de poigne de défense', 'v', 'Pix Xizzix, vallée de Strangleronce (125 Réal de Terremine terni)', 60, ''],
+        ['Bijou 2', 'Marque de tyrannie', 'Marque de tyrannie', 'q', 'Quête « Pour la Horde ! », Pic Blackrock', 60, ''],
+        ['Arme', 'Éloquente', 'Éloquente', 'c', 'Forge 300 : tu peux la fabriquer toi-même', 60, ''],
+        ['Bouclier', 'Déflecteur draconien', 'Déflecteur draconien', 'd', 'Pic Blackrock supérieur, Drakkisath (22 %)', 60, ''],
+        ['Distance', 'Arc long d\'Eaglehorn', 'Arc long d\'Eaglehorn', 'd', 'Pic Blackrock inférieur, Gizrul l\'esclavagiste', 60, '']
       ] }
   ];
   var T = { d: 'Donjon', q: 'Quête', c: 'Artisanat', v: 'Vendeur' };

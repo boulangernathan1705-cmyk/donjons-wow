@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<link rel="manifest" href="manifest.json"><meta name="theme-color" content="#17110b"><link rel="apple-touch-icon" href="icon-192.png"><meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Consommables et métiers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap">
+<style>
+/* Layout: header · 4 tabs (Marques · Pull et annonces · Ton kit · Stream Deck), each fits about one screen on a monitor. Parchment theme shared with the dungeon sheets. */
+:root {
+  color-scheme: dark;
+  --bg: #17110b; --text: #2a1c0e; --muted: #6f5536; --soft: #3d2b17; --line: #b8975c;
+  --tank: #1d5fae; --quest: #8a4f0c; --ok: #2c7a43; --boss: #a3271d; --say: #7a4a00;
+  --gold: #d9b45c; --gold-hi: #f3d88f; --gold-lo: #8a6a2c; --ink: #1c140b; --key: #241a10;
+  --title: Cinzel, Georgia, serif; --body: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { background: var(--bg); }
+body { margin: 0; color: var(--text); font-family: var(--body); font-size: 15.5px; line-height: 1.45;
+  background-image: radial-gradient(ellipse at 50% -10%, rgba(120,72,28,.35), transparent 60%), radial-gradient(ellipse at 50% 120%, rgba(0,0,0,.6), transparent 55%); background-attachment: fixed;
+  padding: 16px max(16px, env(safe-area-inset-right, 0px)) 32px max(16px, env(safe-area-inset-left, 0px)); }
+.wrap { max-width: 1240px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; }
+.back { color: var(--gold); font-size: 13.5px; text-decoration: none; font-weight: 600; }
+.back:hover { color: var(--gold-hi); }
+h1 { font-family: var(--title); font-weight: 700; color: var(--gold-hi); font-size: clamp(28px, 3.6vw, 42px); line-height: 1.05; margin: 4px 0 0; text-shadow: 0 1px 0 #3a2508, 0 0 18px rgba(217,180,92,.35); text-wrap: balance; }
+.sub { color: #a8916c; margin-top: 6px; max-width: 75ch; }
+nav.tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--gold-lo); overflow-x: auto; }
+nav.tabs button { font: 700 15.5px var(--body); color: #c9b28a; background: none; border: 0; border-bottom: 3px solid transparent; padding: 9px 14px; cursor: pointer; white-space: nowrap; }
+nav.tabs button[aria-selected="true"] { color: var(--gold-hi); border-bottom-color: var(--gold); }
+button:focus-visible, a:focus-visible { outline: 2px solid var(--gold-hi); outline-offset: 2px; }
+.view { display: none; flex-direction: column; gap: 14px; }
+.view.on { display: flex; }
+.parch { background: linear-gradient(180deg, #f3e7c8, #ead8ad); border: 1px solid var(--gold-lo); border-radius: 8px; color-scheme: light;
+  box-shadow: inset 0 0 0 1px rgba(255,246,215,.55), inset 0 0 22px rgba(140,95,35,.22), 0 2px 8px rgba(0,0,0,.45); padding: 12px 15px; min-width: 0; }
+.parch h2 { font-family: var(--title); font-size: 18px; margin: 0 0 8px; }
+.parch h3 { font-size: 12.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--quest); margin: 0 0 4px; }
+.parch p { margin: 0 0 6px; color: var(--soft); }
+.parch p:last-child { margin-bottom: 0; }
+.grid2 { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 14px; align-items: start; }
+.grid3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; align-items: start; }
+ul, ol { margin: 0; padding-left: 20px; color: var(--soft); }
+li { margin: 3px 0; }
+table { width: 100%; border-collapse: collapse; }
+th { text-align: left; font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); padding: 5px 6px; border-bottom: 1px solid var(--line); }
+td { padding: 7px 6px; border-bottom: 1px dashed rgba(138,106,44,.45); vertical-align: top; color: var(--soft); }
+tr:last-child td { border-bottom: 0; }
+td b { color: var(--text); }
+.mk { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; color: var(--text); white-space: nowrap; }
+.mk svg { width: 24px; height: 24px; flex: none; }
+.say { display: flex; gap: 10px; align-items: center; justify-content: space-between; padding: 7px 0; border-bottom: 1px dashed rgba(138,106,44,.45); }
+.say:last-child { border-bottom: 0; }
+.say q { color: var(--say); font-style: italic; quotes: "« " " »"; }
+.say .when { display: block; font-size: 12px; color: var(--muted); font-weight: 600; }
+.copy { flex: none; font: 700 12px var(--body); color: var(--text); background: rgba(120,85,40,.14); border: 1px solid var(--gold-lo); border-radius: 6px; padding: 5px 9px; cursor: pointer; }
+.copy.done { background: var(--ok); color: #fff; border-color: var(--ok); }
+.lv { display: inline-block; font-size: 11px; font-weight: 800; color: var(--muted); border: 1px solid var(--line); border-radius: 5px; padding: 0 5px; margin-left: 4px; font-variant-numeric: tabular-nums; }
+.later { opacity: .5; }
+.later .lv { color: var(--boss); border-color: var(--boss); }
+.note { font-size: 13px; color: var(--muted); }
+code { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 13px; background: rgba(120,85,40,.14); border-radius: 4px; padding: 1px 5px; color: var(--text); white-space: pre-wrap; }
+.deck { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; background: #0d0a06; border-radius: 14px; padding: 12px; border: 1px solid var(--gold-lo); }
+.k { aspect-ratio: 1; max-width: 100%; border-radius: 10px; background: var(--key); border: 1px solid #3a2a16; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; text-align: center; padding: 4px; color: #ecd9b0; font-size: 11.5px; font-weight: 700; line-height: 1.15; }
+.k svg { width: 42%; height: auto; }
+.k small { color: #a8916c; font-weight: 600; font-size: 10px; }
+.k.say2 { background: #2a1d0b; color: #f3d88f; }
+.k.sys { background: #1a2230; color: #cfe0f5; }
+.k .big { font-size: 20px; line-height: 1; }
+.steps { counter-reset: s; list-style: none; padding: 0; }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 8px; margin: 6px 0; }
+.steps li::before { content: counter(s); width: 24px; height: 24px; border-radius: 50%; background: var(--quest); color: #fff; font-weight: 800; font-size: 13px; display: inline-flex; align-items: center; justify-content: center; }
+.foot { color: #a8916c; font-size: 12.5px; }
+.foot a { color: var(--gold); }
+@media (max-width: 980px) { .grid2, .grid3 { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 520px) { .deck { gap: 5px; padding: 8px; } .k { font-size: 9.5px; border-radius: 7px; } .k small { display: none; } .k .big { font-size: 15px; } }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+.rules3 { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; }
+.rules3 .rule { background: rgba(20,14,8,.65); border: 1px solid var(--gold-lo); border-radius: 8px; padding: 12px 14px; }
+.rules3 .rule b { color: var(--gold-hi); font-size: 15.5px; } .rules3 .rule p { margin: 4px 0 0; color: #c9b28a; font-size: 14px; }
+.tiers { display: flex; flex-direction: column; gap: 10px; }
+.tier { border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; background: rgba(255,250,232,.5); }
+.tier.now { border: 2px solid var(--ok); background: rgba(44,122,67,.08); }
+.tier.now h3::after { content: "ton palier"; margin-left: 8px; font-size: 11px; color: #fff; background: var(--ok); border-radius: 999px; padding: 1px 8px; letter-spacing: .04em; }
+.parch a[data-q] { color: var(--text); font-weight: 700; text-decoration: underline dotted var(--gold-lo); text-underline-offset: 3px; }
+.steps2 tr.rank td { background: rgba(29,95,174,.1); color: var(--tank); font-weight: 700; }
+.shop { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 4px 12px; }
+.shop span { padding: 4px 0; border-bottom: 1px dashed rgba(138,106,44,.45); font-size: 14px; color: var(--soft); }
+.warn { border-left: 4px solid var(--boss); }
+.addons { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px; }
+.ad { background: rgba(255,250,232,.7); border: 1px solid var(--line); border-radius: 8px; padding: 9px 11px; }
+.ad.must { border-color: var(--ok); }
+.ad b { color: var(--text); } .ad p { margin: 4px 0 0; font-size: 14px; }
+.nat { margin-left: 6px; font-size: 11px; font-weight: 700; color: var(--tank); border: 1px solid rgba(29,95,174,.4); border-radius: 999px; padding: 0 7px; }
+.macros { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 14px; }
+.code { background: #1c140b; color: #f3d88f; border-radius: 6px; padding: 10px 12px; font: 13px/1.5 ui-monospace, "SF Mono", Menlo, Consolas, monospace; white-space: pre-wrap; margin: 6px 0; }
+@media (max-width: 980px) { .rules3, .addons, .macros { grid-template-columns: minmax(0,1fr); } }
+@media (max-width: 520px) { .shop { grid-template-columns: minmax(0,1fr); } }
+</style>
+<div class="wrap">
+  <div>
+    <a class="back" href="index.html">← Accueil des fiches</a>
+    <h1>Consommables, métiers et addons</h1>
+    <div class="sub">Ce qu'un tank Guerrier emporte en donjon, ta montée Minage et Forge, les addons qui marchent vraiment sur Forever, l'or et les réputations. Ton niveau : <b id="mylv" style="color:var(--gold-hi)">14</b>.</div>
+  </div>
+
+  <nav class="tabs" role="tablist" aria-label="Sections">
+    <button role="tab" id="t-conso" aria-controls="v-conso" aria-selected="true">Consommables</button>
+    <button role="tab" id="t-mine" aria-controls="v-mine" aria-selected="false">Minage</button>
+    <button role="tab" id="t-forge" aria-controls="v-forge" aria-selected="false">Forge</button>
+    <button role="tab" id="t-addons" aria-controls="v-addons" aria-selected="false">Addons</button>
+    <button role="tab" id="t-gold" aria-controls="v-gold" aria-selected="false">Or et réputations</button>
+    <button role="tab" id="t-macros" aria-controls="v-macros" aria-selected="false">Macros</button>
+  </nav>
+
+  <!-- CONSOMMABLES -->
+  <section class="view on" id="v-conso" role="tabpanel" aria-labelledby="t-conso">
+    <div class="rules3">
+      <div class="rule"><b>Ton sac de donjon</b><p>Nourriture, bandages, potions de soins et une pierre à aiguiser sur l'arme. Le reste s'ajoute au fil des niveaux.</p></div>
+      <div class="rule"><b>Ton avantage de forgeron</b><p>Tu fabriques toi-même pierres à aiguiser, pierres de lest et pointes de bouclier. C'est de la menace gratuite.</p></div>
+      <div class="rule"><b>Ton avantage de mineur</b><p>« Fait de métal » : +5 % de vie totale en permanence. C'est un des meilleurs bonus de métier pour un tank.</p></div>
+    </div>
+    <p class="note" style="color:#a8916c">Les noms d'objets ouvrent une recherche Wowhead Forever en français, qui donne le nom exact et les stats. Les paliers sont indicatifs.</p>
+    <div class="grid2">
+      <div class="parch">
+        <h2>Par palier de niveau</h2>
+        <div class="tiers">
+          <div class="tier" data-lv="1"><h3>10 à 25</h3><ul>
+            <li><a data-q="Rough Sharpening Stone">Pierre à aiguiser brute</a>, puis <a data-q="Coarse Sharpening Stone">grossière</a> : tu les fais toi-même dès le début de la Forge.</li>
+            <li>Bandages en <a data-q="Linen Bandage">lin</a> puis en <a data-q="Wool Bandage">laine</a> (Secourisme) entre deux packs.</li>
+            <li>Les potions de soins de ton niveau pour les coups durs.</li>
+            <li><a data-q="Elixir of Minor Defense">Élixir de défense mineure</a> et <a data-q="Elixir of Lion's Strength">Élixir de force du lion</a> pour les boss difficiles.</li>
+          </ul></div>
+          <div class="tier" data-lv="25"><h3>25 à 40</h3><ul>
+            <li><a data-q="Heavy Sharpening Stone">Pierre à aiguiser lourde</a> (Forge 100 à 113, tu en feras de toute façon).</li>
+            <li><a data-q="Iron Shield Spike">Pointe de bouclier en fer</a> (Forge 125) : chaque blocage inflige des dégâts.</li>
+            <li>Bandages en <a data-q="Silk Bandage">soie</a>, <a data-q="Rage Potion">Potion de rage</a> si la rage manque sur un boss.</li>
+            <li><a data-q="Elixir of Defense">Élixir de défense</a> et <a data-q="Elixir of Fortitude">Élixir de robustesse</a>.</li>
+          </ul></div>
+          <div class="tier" data-lv="40"><h3>40 à 55</h3><ul>
+            <li><a data-q="Solid Sharpening Stone">Pierre à aiguiser solide</a>, et <a data-q="Mithril Shield Spike">Pointe de bouclier en mithril</a> (Forge 190).</li>
+            <li>Bandages en <a data-q="Mageweave Bandage">tisse-mage</a>, <a data-q="Great Rage Potion">Potion de grande rage</a>.</li>
+            <li><a data-q="Elixir of Greater Defense">Élixir de défense supérieure</a> et <a data-q="Lesser Stoneshield Potion">Potion de bouclier de pierre inférieure</a> sur les boss qui tapent fort.</li>
+            <li><a data-q="Free Action Potion">Potion d'action libre</a> contre les étourdissements et ralentissements.</li>
+          </ul></div>
+          <div class="tier" data-lv="55"><h3>55 et 60</h3><ul>
+            <li><a data-q="Dense Sharpening Stone">Pierre à aiguiser dense</a> (ou <a data-q="Dense Weightstone">pierre de lest dense</a> sur une masse), <a data-q="Thorium Shield Spike">Pointe de bouclier en thorium</a> (Forge 250).</li>
+            <li>Bandages en <a data-q="Heavy Runecloth Bandage">étoffe runique épaisse</a>, <a data-q="Major Healing Potion">potions de soins majeures</a>.</li>
+            <li><a data-q="Mighty Rage Potion">Potion de rage puissante</a> : la simulation tank de Kami Labs l'utilise sur les boss.</li>
+            <li><a data-q="Elixir of Superior Defense">Élixir de défense excellente</a>, <a data-q="Elixir of the Mongoose">Élixir de la mangouste</a>, <a data-q="Greater Stoneshield Potion">Potion de bouclier de pierre supérieure</a>.</li>
+            <li>Nourriture : <a data-q="Dragonbreath Chili">Chili de souffle de dragon</a> (dégâts de feu autour de toi, utilisé dans la sim), <a data-q="Grilled Squid">Calmar grillé</a> (Agilité), <a data-q="Rumsey Rum Black Label">Rhum de Rumsey étiquette noire</a> (Endurance).</li>
+          </ul></div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px;min-width:0">
+        <div class="parch">
+          <h2>Quand utiliser quoi</h2>
+          <table><tbody>
+            <tr><td><b>Pierre à aiguiser</b></td><td>Avant chaque donjon, sur ton arme. Dure 30 minutes. Plus de dégâts, donc plus de menace.</td></tr>
+            <tr><td><b>Pointe de bouclier</b></td><td>Posée une fois sur le bouclier, elle reste. Chaque blocage blesse l'ennemi : plus de menace sur les packs.</td></tr>
+            <tr><td><b>Élixirs</b></td><td>Sur les boss difficiles ou les donjons de haut niveau. Un élixir de défense et un d'attaque peuvent se cumuler.</td></tr>
+            <tr><td><b>Potion de rage</b></td><td>Au pull d'un boss, quand tu manques de rage pour prendre l'aggro. Ne pas la gâcher sur les packs.</td></tr>
+            <tr><td><b>Bouclier de pierre</b></td><td>Avant un gros coup physique, en complément de Mur protecteur.</td></tr>
+            <tr><td><b>Bandages</b></td><td>Entre deux packs pour soulager ton soigneur. Impossible si tu prends des coups.</td></tr>
+          </tbody></table>
+        </div>
+        <div class="parch">
+          <h2>Les autres métiers en une ligne</h2>
+          <p class="note">D'après la page métiers de Kami Labs (bonus annoncés à la BlizzCon, pas tous confirmés en jeu).</p>
+          <ul>
+            <li><b>Alchimie</b> : élixirs plus longs et plus forts (Mixologie), Pierre philosophale.</li>
+            <li><b>Ingénierie</b> : gadgets, bombes, bijoux en plus.</li>
+            <li><b>Travail du cuir</b> : kits d'armure, vitesse de monture.</li>
+            <li><b>Enchantement</b> : enchantements d'anneaux.</li>
+            <li><b>Herboristerie</b> : résistance à toutes les écoles de magie.</li>
+            <li><b>Dépeçage</b> : +5 % de dégâts contre bêtes et dragonoïdes.</li>
+            <li><b>Secourisme</b> et <b>Cuisine</b> : secondaires, à prendre en plus. Utiles pour un tank.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MINAGE -->
+  <section class="view" id="v-mine" role="tabpanel" aria-labelledby="t-mine">
+    <div class="grid2">
+      <div class="parch">
+        <h2>Où miner, palier par palier</h2>
+        <p class="note">Zones adaptées à la Horde. Au-delà de 75, ce sont les zones les plus denses relevées par Kami Labs.</p>
+        <table class="steps2"><thead><tr><th>Compétence</th><th>Minerai</th><th>Où</th></tr></thead><tbody>
+          <tr data-lv="1"><td>1 à 50</td><td>Cuivre</td><td>Durotar, Mulgore, Clairières de Tirisfal, Les Tarides</td></tr>
+          <tr data-lv="10"><td>50 à 75</td><td>Étain, cuivre, incendicite</td><td>Les Tarides, Forêt des Pins-Argentés, Serres-Rocheuses</td></tr>
+          <tr data-lv="20"><td>75 à 125</td><td>Argent, étain, pierre de sang inférieure</td><td>Mille pointes, Contreforts de Hautebrande, Hautes-terres d'Arathi</td></tr>
+          <tr data-lv="25"><td>125 à 150</td><td>Fer</td><td>Hautes-terres d'Arathi, Mille pointes, Désolace, Strangleronce</td></tr>
+          <tr data-lv="30"><td>150 à 175</td><td>Or, indurium, fer</td><td>Arathi, Strangleronce, Terres ingrates</td></tr>
+          <tr data-lv="35"><td>175 à 225</td><td>Mithril, or</td><td>Arathi, Terres ingrates, Strangleronce, Les Hinterlands, Tanaris</td></tr>
+          <tr data-lv="45"><td>225 à 250</td><td>Sombrefer, vrai-argent, mithril</td><td>Steppes ardentes, Les Hinterlands, Gorge des Vents brûlants, Tanaris</td></tr>
+          <tr data-lv="50"><td>250 à 300</td><td>Thorium, sombrefer, vrai-argent</td><td>Steppes ardentes, Silithus, Berceau-de-l'Hiver, Cratère d'Un'Goro</td></tr>
+        </tbody></table>
+        <p class="note" style="margin-top:8px">Fondre les barres fait aussi monter le Minage : cuivre 25 à 65, bronze 65 à 75, argent 75 à 125, fer 125 à 140, or 170 à 185. Le sombrefer se fond seulement à la Forge noire, dans les Profondeurs de Blackrock.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px;min-width:0">
+        <div class="parch">
+          <h2>Les bonus du Minage sur Forever</h2>
+          <ul>
+            <li><b>Fait de métal</b> : +5 % de vie totale.</li>
+            <li><b>Un filon de minerai</b> : plus de minerai par gisement.</li>
+            <li><b>Minage malicieux</b> : les gisements peuvent donner des matériaux rares ou de combat.</li>
+            <li>Des points d'Héritage à 150, 225 et 300 de compétence.</li>
+          </ul>
+          <p class="note">Bonus annoncés à la BlizzCon et relevés par Kami Labs, pas tous confirmés en jeu.</p>
+        </div>
+        <div class="parch">
+          <h2>Maîtres mineurs Horde</h2>
+          <table><tbody>
+            <tr><td><b>Makaru</b></td><td>Orgrimmar (73, 26)</td></tr>
+            <tr><td><b>Krunn</b>, <b>Norzsh</b></td><td>Durotar (52, 41) et (40, 68)</td></tr>
+            <tr><td><b>Brek Stonehoof</b></td><td>Les Pitons-du-Tonnerre (34, 57)</td></tr>
+            <tr><td><b>Brom Killian</b></td><td>Fossoyeuse (55, 36)</td></tr>
+          </tbody></table>
+        </div>
+        <div class="parch">
+          <h2>Addons pour miner</h2>
+          <ul>
+            <li><b>ForeverMapNotes</b> : veines de minerai, coffres et rares sur la carte.</li>
+            <li><b>FarmMap V2</b> : retient les gisements que tu as déjà récoltés.</li>
+            <li><b>ForeverFarmHUD</b> : affichage transparent pendant que tu farmes.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORGE -->
+  <section class="view" id="v-forge" role="tabpanel" aria-labelledby="t-forge">
+    <div class="grid2">
+      <div class="parch">
+        <h2>La montée de 1 à 300</h2>
+        <p class="note">Route de Kami Labs, quantités moyennes. Les étapes en couleur sont les visites au maître forgeron.</p>
+        <table class="steps2"><thead><tr><th>Compétence</th><th>Recette</th><th>Combien</th></tr></thead><tbody>
+          <tr><td>1 à 35</td><td>Pierre à aiguiser brute</td><td>≈ 41</td></tr>
+          <tr><td>35 à 75</td><td>Silex à aiguiser brut</td><td>≈ 64</td></tr>
+          <tr class="rank"><td>50</td><td colspan="2">Rang Compagnon (niveau 10) : la limite passe à 150</td></tr>
+          <tr><td>75 à 90</td><td>Passe-partout en argent</td><td>≈ 26</td></tr>
+          <tr><td>90 à 100</td><td>Jambières grossières en bronze</td><td>≈ 10</td></tr>
+          <tr><td>100 à 113</td><td>Pierre à aiguiser lourde</td><td>≈ 27</td></tr>
+          <tr><td>113 à 125</td><td>Jambières grossières en bronze</td><td>≈ 12</td></tr>
+          <tr class="rank"><td>125</td><td colspan="2">Rang Expert (niveau 20) : la limite passe à 225</td></tr>
+          <tr><td>125 à 129</td><td>Boucle en fer</td><td>≈ 6</td></tr>
+          <tr><td>129 à 133</td><td>Bâtonnet doré</td><td>≈ 5</td></tr>
+          <tr><td>133 à 140</td><td>Bottes en bronze argenté</td><td>≈ 7</td></tr>
+          <tr><td>140 à 175</td><td>Brassards en fer émeraude</td><td>≈ 37</td></tr>
+          <tr><td>175 à 184</td><td>Pierre à aiguiser solide</td><td>≈ 19</td></tr>
+          <tr><td>184 à 190</td><td>Brassards en écailles dorées</td><td>≈ 6</td></tr>
+          <tr><td>190 à 221</td><td>Brassards en plaques de mithril (recette chez Harggan, Les Hinterlands, 53 pa)</td><td>≈ 32</td></tr>
+          <tr class="rank"><td>200</td><td colspan="2">Rang Artisan (niveau 35) : la limite passe à 300</td></tr>
+          <tr><td>221 à 225</td><td>Cuirasse lourde en mithril</td><td>≈ 4</td></tr>
+          <tr><td>225 à 300</td><td>Pierre à aiguiser dense, bottes lourdes en mithril, Kriss d'ébène, pièces impériales en plaques, passe-partout et marteau en arcanite</td><td></td></tr>
+        </tbody></table>
+        <p class="note" style="margin-top:8px">Le détail entre 225 et 300 est encore flou sur Kami Labs. L'addon SkillUp Forever affiche la chance de monter et le coût de chaque recette dans ta fenêtre de métier.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px;min-width:0">
+        <div class="parch">
+          <h2>Ce que la Forge t'apporte en tank</h2>
+          <ul>
+            <li><b>Tout réparer</b> : tu répares tout ton équipement d'un coup, sans marchand.</li>
+            <li><b>Boucles de ceinture</b> : ajoutent des emplacements de caractéristiques à ta ceinture.</li>
+            <li><b>Pointes de bouclier</b> en fer (125), mithril (190) et thorium (250).</li>
+            <li><b>Boucliers</b> : Bouclier sempervirent (nouveau sur Forever) et Bouclier dentelé en obsidienne, à 300.</li>
+            <li><b>Armures</b> : Cuirasse du salut et Heaume infrangible (nouveaux sur Forever, 300), et Éloquente, l'arme de la BiS de donjon.</li>
+          </ul>
+        </div>
+        <div class="parch">
+          <h2>Liste de courses jusqu'à 300</h2>
+          <p class="note">À miner ou acheter à l'hôtel des ventes. Entre parenthèses : avec une marge.</p>
+          <div class="shop">
+            <span>Barres de thorium <b>1 032</b> (1 066)</span><span>Barres de mithril <b>458</b> (510)</span>
+            <span>Barres de fer <b>228</b> (250)</span><span>Barres de bronze <b>174</b> (198)</span>
+            <span>Barres de sombrefer <b>64</b> (92)</span><span>Barres de vrai-argent <b>48</b></span>
+            <span>Barres d'argent <b>33</b> (42)</span><span>Barres d'acier <b>30</b> (40)</span>
+            <span>Barres d'arcanite <b>30</b> (43)</span><span>Pierres brutes <b>169</b> (194)</span>
+            <span>Citrines <b>64</b>, rubis étoilés <b>55</b></span><span>Teinture verte <b>37</b> (marchand)</span>
+          </div>
+        </div>
+        <div class="parch">
+          <h2>Maîtres forgerons Horde</h2>
+          <table><tbody>
+            <tr><td><b>Compagnon</b></td><td>Ug'thok (Orgrimmar), Dwukk (Durotar), Thrag Stonehoof (Pitons-du-Tonnerre)</td></tr>
+            <tr><td><b>Expert</b></td><td>Snarl (Orgrimmar), Traugh (Les Tarides)</td></tr>
+            <tr><td><b>Artisan</b></td><td>Saru Steelfury (Orgrimmar)</td></tr>
+          </tbody></table>
+          <p class="note">Des recettes supplémentaires s'achètent avec la Faveur marchande (onglet Or et réputations) : 61 recettes de Forge, 3 510 de Faveur pour tout prendre.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ADDONS -->
+  <section class="view" id="v-addons" role="tabpanel" aria-labelledby="t-addons">
+    <div class="parch warn">
+      <h2>À savoir avant d'installer</h2>
+      <p>Forever tourne sur le client moderne de WoW, pas sur le client Classic. Les addons Classic ne se chargent pas : prends toujours la version marquée « Forever » ou compatible. WeakAuras, OmniBar et BigDebuffs ne marchent plus. Le journal de combat est fermé aux addons, et certaines valeurs (menace, vie, auras) sont cachées en combat : les compteurs de menace peuvent être moins fiables qu'avant. Un seul addon de carte à la fois.</p>
+    </div>
+    <div class="parch">
+      <h2>Les indispensables</h2>
+      <div class="addons">
+        <div class="ad must"><b>BugSack + BugGrabber</b><p>Attrape les erreurs des autres addons au lieu de les afficher en plein combat.</p></div>
+        <div class="ad must"><b>Cooldown Manager</b><span class="nat">intégré au jeu</span><p>À activer dans Options, Gameplay Enhancement. Affiche tes recharges importantes (Mur protecteur, Dernier rempart…).</p></div>
+        <div class="ad must"><b>Deadly Boss Mods</b><p>Alertes de boss. Le seul avec des modules Forever (BigWigs n'en a pas).</p></div>
+        <div class="ad must"><b>Questie</b><p>Les quêtes et leurs objectifs sur la carte. Prends la version Forever.</p></div>
+        <div class="ad must"><b>ThreatClassic2</b><p>Compteur de menace. Teste-le en donjon : la menace peut être cachée en combat sur Forever.</p></div>
+        <div class="ad must"><b>Details!</b><p>Compteur de dégâts. Passe en version alpha si ses fenêtres restent vides.</p></div>
+      </div>
+    </div>
+    <div class="grid2">
+      <div class="parch">
+        <h2>Pour ton tank</h2>
+        <table><tbody>
+          <tr><td><b>Threat Plates</b></td><td>Barres de vie des ennemis colorées selon qui a l'aggro. À tester, pour la même raison que la menace cachée.</td></tr>
+          <tr><td><b>ForeverThreat</b></td><td>Autre compteur de menace, si ThreatClassic2 te déçoit.</td></tr>
+          <tr><td><b>Cooldown Manager Centered</b></td><td>Rend le gestionnaire de recharges du jeu plus lisible.</td></tr>
+          <tr><td><b>TellMeWhen</b></td><td>Suivi de tes auras et recharges : par exemple Maîtrise du blocage ou Fracasser armure à 5.</td></tr>
+          <tr><td><b>tullaCTC</b></td><td>Chiffres sur les recharges de tes boutons.</td></tr>
+          <tr><td><b>ForeverAuras</b>, <b>Musca Auras</b></td><td>Remplaçants de WeakAuras, encore jeunes.</td></tr>
+          <tr><td><b>Nova Spell Rank Checker</b></td><td>Te prévient quand un sort de ta barre est à un ancien rang.</td></tr>
+          <tr><td><b>GTFO</b></td><td>Alerte sonore quand tu restes dans une zone de dégâts. Partiellement compatible.</td></tr>
+        </tbody></table>
+      </div>
+      <div class="parch">
+        <h2>Confort, métiers et or</h2>
+        <table><tbody>
+          <tr><td><b>SkillUp Forever</b></td><td>Chance de monter, coût et liste de courses dans la fenêtre de métier. Parfait pour ta Forge.</td></tr>
+          <tr><td><b>ForeverMapNotes</b>, <b>FarmMap V2</b></td><td>Gisements de minerai sur la carte (onglet Minage).</td></tr>
+          <tr><td><b>Baganator</b> ou <b>Bagnon</b></td><td>Tous tes sacs en une fenêtre.</td></tr>
+          <tr><td><b>Auctionator</b></td><td>Hôtel des ventes et import de listes de courses (cité par le guide Forge de Kami Labs, vérifie la version Forever).</td></tr>
+          <tr><td><b>Extended Vendor Forever</b></td><td>Fenêtre de marchand agrandie.</td></tr>
+          <tr><td><b>Bartender4</b>, <b>Dominos</b></td><td>Barres d'action personnalisables.</td></tr>
+          <tr><td><b>ElvUI</b>, <b>ForeverUI</b>, <b>ClassicUI Forever</b></td><td>Interfaces complètes. ClassicUI redonne le look de Classic.</td></tr>
+          <tr><td><b>Mode Édition</b></td><td>Intégré au jeu (Échap, Mode Édition) : déplace les éléments de l'interface sans addon.</td></tr>
+        </tbody></table>
+      </div>
+    </div>
+  </section>
+
+  <!-- OR ET REPUTATIONS -->
+  <section class="view" id="v-gold" role="tabpanel" aria-labelledby="t-gold">
+    <div class="grid2">
+      <div class="parch">
+        <h2>Faire de l'or avec Minage et Forge</h2>
+        <ul>
+          <li><b>Vends tes barres plutôt que ton minerai</b> quand le prix est meilleur : la fonte te fait aussi monter le Minage.</li>
+          <li><b>Thorium et mithril</b> : les forgerons en ont besoin par centaines pour monter (plus de 1 000 barres de thorium jusqu'à 300). Ça se vend bien.</li>
+          <li><b>Pierres à aiguiser et de lest denses</b> : consommées en permanence par les guerriers, voleurs et chasseurs dès l'ouverture des raids.</li>
+          <li><b>Pointes de bouclier</b> : peu de forgerons les font, les tanks les cherchent.</li>
+          <li>Garde de l'or pour tes sorts : apprendre toutes tes techniques du niveau 1 au 60 coûte environ 207 pièces d'or, plus ta monture.</li>
+        </ul>
+        <p class="note">Le guide d'or de Kami Labs est réservé à leurs abonnés : ces conseils sont les miens, à adapter aux prix de ton serveur.</p>
+      </div>
+      <div class="parch">
+        <h2>La Faveur marchande</h2>
+        <p>C'est une monnaie nouvelle sur Forever. On la gagne en livrant des caisses à deux organisations de marchands, et on la dépense chez huit marchands qui vendent des recettes de métier.</p>
+        <p>Côté Horde, les marchands sont à <b>la Croisée</b>, dans Les Tarides.</p>
+        <p>Pour la Forge : 61 recettes, 150 de Faveur pour celles d'apprenti, 750 compagnon, 600 expert, 2 010 artisan.</p>
+      </div>
+    </div>
+    <div class="parch">
+      <h2>Les réputations utiles à un tank Horde</h2>
+      <p class="note">Liste de Classic, à confirmer sur Forever au fil des mises à jour. Aucune page réputations Horde n'existe encore chez Kami Labs.</p>
+      <table><tbody>
+        <tr><td><b>Confrérie du Thorium</b></td><td>Gorge des Vents brûlants. Pour un forgeron, c'est la plus importante : recettes en sombrefer et pièces de résistance au feu pour le Cœur du Magma.</td></tr>
+        <tr><td><b>Aube d'argent</b></td><td>Maleterres. Se monte en faisant Stratholme et Scholomance, donne des enchantements de tête et de jambes.</td></tr>
+        <tr><td><b>Les Grumegueules</b></td><td>Gangrebois et Berceau-de-l'Hiver. Passage entre les zones, et recettes.</td></tr>
+        <tr><td><b>Les Hydraxiens</b></td><td>Azshara. Nécessaire pour éteindre les runes du Cœur du Magma.</td></tr>
+        <tr><td><b>Orgrimmar et ta capitale</b></td><td>Réductions chez les marchands et monture.</td></tr>
+      </tbody></table>
+    </div>
+  </section>
+
+  <!-- MACROS -->
+  <section class="view" id="v-macros" role="tabpanel" aria-labelledby="t-macros">
+    <div class="parch warn">
+      <h2>Pourquoi des macros sur Forever</h2>
+      <p>Un sort posé seul sur ta barre ne passe pas au nouveau rang quand tu l'achètes chez le maître de classe. Une macro « /cast Nom du sort » sans rang lance toujours ton rang le plus haut. Et un sort appris n'est plus ajouté tout seul à tes barres.</p>
+    </div>
+    <div class="macros">
+      <div class="parch"><h3>Mur protecteur, même hors posture</h3><pre class="code">#showtooltip Mur protecteur
+/cast [nostance:2] Posture défensive
+/cast Mur protecteur</pre><p class="note">Repasse en Posture défensive si besoin, puis lance le Mur.</p></div>
+      <div class="parch"><h3>Heurt de bouclier, sinon Vengeance</h3><pre class="code">#showtooltip
+/cast [nostance:2] Posture défensive
+/cast Heurt de bouclier
+/cast Vengeance</pre><p class="note">Vengeance est le nom en jeu de Revanche.</p></div>
+      <div class="parch"><h3>Heurt + Maîtrise du blocage (Icy Veins)</h3><pre class="code">#showtooltip Heurt de bouclier
+/cast Maîtrise du blocage
+/cast Heurt de bouclier</pre><p class="note">Avant le niveau 40, remplace Heurt de bouclier par Vengeance.</p></div>
+      <div class="parch"><h3>Fracasser armure sur la cible survolée</h3><pre class="code">#showtooltip
+/startattack
+/cast [@mouseover,harm,nodead][] Fracasser armure</pre><p class="note">Pratique pour poser de la menace sur un deuxième mob sans changer de cible.</p></div>
+      <div class="parch"><h3>Provocation sur la cible survolée</h3><pre class="code">#showtooltip
+/cast [@mouseover,harm,nodead][] Provocation</pre><p class="note">Survole le mob qui tape ton soigneur dans les cadres de vie ou à l'écran.</p></div>
+      <div class="parch"><h3>Coup de bouclier sur la cible survolée</h3><pre class="code">#showtooltip
+/cast [@mouseover,harm,nodead][] Coup de bouclier</pre><p class="note">Interrompre un lanceur de sorts sans perdre ta cible.</p></div>
+      <div class="parch"><h3>Coup de bouclier depuis la posture berserker</h3><pre class="code">#showtooltip
+/cast [stance:3] Posture défensive
+/cast Coup de bouclier</pre><p class="note">Change de posture si tu es en berserker, puis interrompt.</p></div>
+      <div class="parch"><h3>Cible suivante et attaque</h3><pre class="code">#showtooltip
+/cleartarget [dead]
+/targetenemy [noharm]
+/startattack</pre><p class="note">À confirmer en jeu, d'après Kami Labs.</p></div>
+    </div>
+  </section>
+
+  <div class="foot">Sources : pages Métiers, Guide de la Forge, Guide du Minage, Addons, Faveur marchande, Macros et notes du patch du 2 novembre de Kami Labs (lues le 12 novembre 2026), simulation tank de Kami Labs pour les potions. Consommables par palier et réputations : mes recommandations d'après WoW Classic, à confirmer sur Forever.</div>
+</div>
+<script>
+(function () {
+  var tabs = document.querySelectorAll('nav.tabs button');
+  function show(id) {
+    tabs.forEach(function (t) {
+      var on = t.id === 't-' + id; t.setAttribute('aria-selected', on);
+      document.getElementById(t.getAttribute('aria-controls')).classList.toggle('on', on);
+    });
+    try { localStorage.setItem('wow-conso-tab', id); } catch (e) {}
+  }
+  tabs.forEach(function (t) { t.addEventListener('click', function () { show(t.id.slice(2)); }); });
+  try { var s = localStorage.getItem('wow-conso-tab'); if (s && document.getElementById('t-' + s)) show(s); } catch (e) {}
+  var lv = 14;
+  try { lv = parseInt(localStorage.getItem('wow-level'), 10) || 14; } catch (e) {}
+  document.getElementById('mylv').textContent = lv;
+  var tiers = document.querySelectorAll('.tier'), cur = null;
+  tiers.forEach(function (t) { if (+t.dataset.lv <= lv) cur = t; });
+  if (cur) cur.classList.add('now');
+  document.querySelectorAll('a[data-q]').forEach(function (a) {
+    a.href = 'https://www.wowhead.com/forever/fr/search?q=' + encodeURIComponent(a.dataset.q); a.target = '_blank'; a.rel = 'noopener';
+  });
+})();
+</script>
+<script>if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(function(){});</script></html>
