@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<link rel="manifest" href="manifest.json"><meta name="theme-color" content="#17110b"><link rel="apple-touch-icon" href="icon-192.png"><meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Talents et stats</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap">
+<style>
+/* Layout: header · 4 tabs (Talents · Stats · Rotation · Sorts). Parchment theme shared with the dungeon sheets. */
+:root {
+  color-scheme: dark;
+  --bg: #17110b; --text: #2a1c0e; --muted: #6f5536; --soft: #3d2b17; --line: #b8975c;
+  --tank: #1d5fae; --quest: #8a4f0c; --ok: #2c7a43; --boss: #a3271d; --say: #7a4a00;
+  --gold: #d9b45c; --gold-hi: #f3d88f; --gold-lo: #8a6a2c; --ink: #1c140b; --key: #241a10;
+  --title: Cinzel, Georgia, serif; --body: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { background: var(--bg); }
+body { margin: 0; color: var(--text); font-family: var(--body); font-size: 15.5px; line-height: 1.45;
+  background-image: radial-gradient(ellipse at 50% -10%, rgba(120,72,28,.35), transparent 60%), radial-gradient(ellipse at 50% 120%, rgba(0,0,0,.6), transparent 55%); background-attachment: fixed;
+  padding: 16px max(16px, env(safe-area-inset-right, 0px)) 32px max(16px, env(safe-area-inset-left, 0px)); }
+.wrap { max-width: 1240px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; }
+.back { color: var(--gold); font-size: 13.5px; text-decoration: none; font-weight: 600; }
+.back:hover { color: var(--gold-hi); }
+h1 { font-family: var(--title); font-weight: 700; color: var(--gold-hi); font-size: clamp(28px, 3.6vw, 42px); line-height: 1.05; margin: 4px 0 0; text-shadow: 0 1px 0 #3a2508, 0 0 18px rgba(217,180,92,.35); text-wrap: balance; }
+.sub { color: #a8916c; margin-top: 6px; max-width: 75ch; }
+nav.tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--gold-lo); overflow-x: auto; }
+nav.tabs button { font: 700 15.5px var(--body); color: #c9b28a; background: none; border: 0; border-bottom: 3px solid transparent; padding: 9px 14px; cursor: pointer; white-space: nowrap; }
+nav.tabs button[aria-selected="true"] { color: var(--gold-hi); border-bottom-color: var(--gold); }
+button:focus-visible, a:focus-visible { outline: 2px solid var(--gold-hi); outline-offset: 2px; }
+.view { display: none; flex-direction: column; gap: 14px; }
+.view.on { display: flex; }
+.parch { background: linear-gradient(180deg, #f3e7c8, #ead8ad); border: 1px solid var(--gold-lo); border-radius: 8px; color-scheme: light;
+  box-shadow: inset 0 0 0 1px rgba(255,246,215,.55), inset 0 0 22px rgba(140,95,35,.22), 0 2px 8px rgba(0,0,0,.45); padding: 12px 15px; min-width: 0; }
+.parch h2 { font-family: var(--title); font-size: 18px; margin: 0 0 8px; }
+.parch h3 { font-size: 12.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--quest); margin: 0 0 4px; }
+.parch p { margin: 0 0 6px; color: var(--soft); }
+.parch p:last-child { margin-bottom: 0; }
+.grid2 { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 14px; align-items: start; }
+.grid3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; align-items: start; }
+ul, ol { margin: 0; padding-left: 20px; color: var(--soft); }
+li { margin: 3px 0; }
+table { width: 100%; border-collapse: collapse; }
+th { text-align: left; font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); padding: 5px 6px; border-bottom: 1px solid var(--line); }
+td { padding: 7px 6px; border-bottom: 1px dashed rgba(138,106,44,.45); vertical-align: top; color: var(--soft); }
+tr:last-child td { border-bottom: 0; }
+td b { color: var(--text); }
+.mk { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; color: var(--text); white-space: nowrap; }
+.mk svg { width: 24px; height: 24px; flex: none; }
+.say { display: flex; gap: 10px; align-items: center; justify-content: space-between; padding: 7px 0; border-bottom: 1px dashed rgba(138,106,44,.45); }
+.say:last-child { border-bottom: 0; }
+.say q { color: var(--say); font-style: italic; quotes: "« " " »"; }
+.say .when { display: block; font-size: 12px; color: var(--muted); font-weight: 600; }
+.copy { flex: none; font: 700 12px var(--body); color: var(--text); background: rgba(120,85,40,.14); border: 1px solid var(--gold-lo); border-radius: 6px; padding: 5px 9px; cursor: pointer; }
+.copy.done { background: var(--ok); color: #fff; border-color: var(--ok); }
+.lv { display: inline-block; font-size: 11px; font-weight: 800; color: var(--muted); border: 1px solid var(--line); border-radius: 5px; padding: 0 5px; margin-left: 4px; font-variant-numeric: tabular-nums; }
+.later { opacity: .5; }
+.later .lv { color: var(--boss); border-color: var(--boss); }
+.note { font-size: 13px; color: var(--muted); }
+code { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 13px; background: rgba(120,85,40,.14); border-radius: 4px; padding: 1px 5px; color: var(--text); white-space: pre-wrap; }
+.deck { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; background: #0d0a06; border-radius: 14px; padding: 12px; border: 1px solid var(--gold-lo); }
+.k { aspect-ratio: 1; max-width: 100%; border-radius: 10px; background: var(--key); border: 1px solid #3a2a16; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; text-align: center; padding: 4px; color: #ecd9b0; font-size: 11.5px; font-weight: 700; line-height: 1.15; }
+.k svg { width: 42%; height: auto; }
+.k small { color: #a8916c; font-weight: 600; font-size: 10px; }
+.k.say2 { background: #2a1d0b; color: #f3d88f; }
+.k.sys { background: #1a2230; color: #cfe0f5; }
+.k .big { font-size: 20px; line-height: 1; }
+.steps { counter-reset: s; list-style: none; padding: 0; }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 8px; margin: 6px 0; }
+.steps li::before { content: counter(s); width: 24px; height: 24px; border-radius: 50%; background: var(--quest); color: #fff; font-weight: 800; font-size: 13px; display: inline-flex; align-items: center; justify-content: center; }
+.foot { color: #a8916c; font-size: 12.5px; }
+.foot a { color: var(--gold); }
+@media (max-width: 980px) { .grid2, .grid3 { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 520px) { .deck { gap: 5px; padding: 8px; } .k { font-size: 9.5px; border-radius: 7px; } .k small { display: none; } .k .big { font-size: 15px; } }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+#lvtab tr.past td { opacity: .5; text-decoration: line-through; text-decoration-color: rgba(60,40,20,.5); }
+#lvtab tr.now td { background: rgba(44,122,67,.16); }
+#lvtab tr.now td:first-child { box-shadow: inset 3px 0 0 var(--ok); font-weight: 800; color: var(--ok); }
+.steps li > span { min-width: 0; }
+</style>
+<div class="wrap">
+  <div>
+    <a class="back" href="index.html">← Accueil des fiches</a>
+    <h1>Talents, stats et rotation</h1>
+    <div class="sub">Le guide Protection d'Icy Veins pour Forever, remis au propre avec les noms de sorts de ton client français. Ton niveau actuel : <b id="mylv" style="color:var(--gold-hi)">14</b> (réglé depuis l'accueil).</div>
+  </div>
+
+  <nav class="tabs" role="tablist" aria-label="Sections">
+    <button role="tab" id="t-talents" aria-controls="v-talents" aria-selected="true">Talents</button>
+    <button role="tab" id="t-stats" aria-controls="v-stats" aria-selected="false">Stats</button>
+    <button role="tab" id="t-rota" aria-controls="v-rota" aria-selected="false">Rotation</button>
+    <button role="tab" id="t-sorts" aria-controls="v-sorts" aria-selected="false">Sorts et recharges</button>
+  </nav>
+
+  <!-- TALENTS -->
+  <section class="view on" id="v-talents" role="tabpanel" aria-labelledby="t-talents">
+    <div class="grid2">
+      <div class="parch">
+        <h2>Ordre niveau par niveau</h2>
+        <p class="note">Protection 31, Fureur 16, Armes 4, sans l'atout Héritage. La ligne en vert est ton prochain point, les lignes passées sont barrées.</p>
+        <table id="lvtab">
+          <thead><tr><th>Niveau</th><th>Talent</th><th>Arbre</th></tr></thead>
+          <tbody>
+            <tr data-a="10" data-b="14"><td>10 à 14</td><td><b>Spécialisation Bouclier</b> 1 à 5</td><td>Prot</td></tr>
+            <tr data-a="15" data-b="17"><td>15 à 17</td><td><b>Revanche améliorée</b> 1 à 3</td><td>Prot</td></tr>
+            <tr data-a="18" data-b="19"><td>18 et 19</td><td><b>Coup de tonnerre amélioré</b> 1 et 2</td><td>Prot</td></tr>
+            <tr data-a="20" data-b="21"><td>20 et 21</td><td><b>Maîtrise de la défense</b> 1 et 2</td><td>Prot</td></tr>
+            <tr data-a="22" data-b="22"><td>22</td><td><b>Coup de tonnerre amélioré</b> 3</td><td>Prot</td></tr>
+            <tr data-a="23" data-b="23"><td>23</td><td><b>Dernier rempart</b></td><td>Prot</td></tr>
+            <tr data-a="24" data-b="24"><td>24</td><td><b>Défi</b> 1</td><td>Prot</td></tr>
+            <tr data-a="25" data-b="25"><td>25</td><td><b>Avant-garde</b> (Vanguard) : Charge utilisable en Posture défensive</td><td>Prot</td></tr>
+            <tr data-a="26" data-b="28"><td>26 à 28</td><td><b>Fracasser armure amélioré</b> 1 à 3</td><td>Prot</td></tr>
+            <tr data-a="29" data-b="29"><td>29</td><td><b>Défi</b> 2</td><td>Prot</td></tr>
+            <tr data-a="30" data-b="32"><td>30 à 32</td><td><b>Rage concentrée</b> 1 à 3</td><td>Prot</td></tr>
+            <tr data-a="33" data-b="33"><td>33</td><td><b>Coup traumatisant</b></td><td>Prot</td></tr>
+            <tr data-a="34" data-b="34"><td>34</td><td><b>Défi</b> 3</td><td>Prot</td></tr>
+            <tr data-a="35" data-b="39"><td>35 à 39</td><td><b>Bastion</b> 1 à 5</td><td>Prot</td></tr>
+            <tr data-a="40" data-b="40"><td>40</td><td><b>Heurt de bouclier</b></td><td>Prot</td></tr>
+            <tr data-a="41" data-b="43"><td>41 à 43</td><td><b>Pourfendre amélioré</b> 1 à 3</td><td>Armes</td></tr>
+            <tr data-a="44" data-b="48"><td>44 à 48</td><td><b>Cruauté</b> 1 à 5</td><td>Fureur</td></tr>
+            <tr data-a="49" data-b="53"><td>49 à 53</td><td><b>Colère déchaînée</b> 1 à 5</td><td>Fureur</td></tr>
+            <tr data-a="54" data-b="58"><td>54 à 58</td><td><b>Enrager</b> 1 à 5</td><td>Fureur</td></tr>
+            <tr data-a="59" data-b="59"><td>59</td><td><b>Coups téméraires</b> 1</td><td>Fureur</td></tr>
+            <tr data-a="60" data-b="60"><td>60</td><td><b>Déviation</b> 1</td><td>Armes</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px;min-width:0">
+        <div class="parch">
+          <h2>La config du 60 : 5 / 15 / 31</h2>
+          <p class="note">C'est la configuration finale conseillée par Icy Veins. Elle diffère un peu de l'ordre niveau par niveau, qui garde des points dans Coup de tonnerre et Fracasser armure améliorés pour le leveling. Au 60, une réinitialisation chez le maître de classe permet de passer à celle-ci.</p>
+          <h3>Armes (5)</h3>
+          <ul><li><b>Déviation 5/5</b> : plus de parade, donc moins de coups reçus.</li></ul>
+          <h3 style="margin-top:8px">Fureur (15)</h3>
+          <ul>
+            <li><b>Cruauté 5/5</b> : plus de critiques en mêlée, donc plus de dégâts et de menace.</li>
+            <li><b>Enrager 5/5</b> : +10 % de dégâts physiques après avoir subi un coup, ce qui arrive en permanence quand tu tankes.</li>
+            <li><b>Rage persistante 5/5</b> : tu gardes ta rage d'un pack à l'autre.</li>
+          </ul>
+          <h3 style="margin-top:8px">Protection (31)</h3>
+          <ul>
+            <li><b>Spécialisation Bouclier 5/5</b> : +5 % de blocage et 5 de rage par blocage.</li>
+            <li><b>Anticipation 5/5</b> : plus de défense, donc moins de coups reçus.</li>
+            <li><b>Revanche améliorée 3/3</b> : Revanche peut étourdir.</li>
+            <li><b>Dernier rempart 1/1</b>, <b>Défi 3/3</b> (plus de menace), <b>Avant-garde 1/1</b>.</li>
+            <li><b>Maîtrise de la défense 2/2</b> : 5 de rage par esquive ou parade avec un bouclier.</li>
+            <li><b>Mur protecteur amélioré 2/2</b> : Mur protecteur revient toutes les 4 minutes au lieu de 15.</li>
+            <li><b>Coup traumatisant 1/1</b>, <b>Rage concentrée 2/3</b>, <b>Bastion 5/5</b> (plus de dégâts avec un bouclier), <b>Heurt de bouclier 1/1</b>.</li>
+          </ul>
+        </div>
+        <div class="parch">
+          <h2>Si tu manques de rage</h2>
+          <p>Icy Veins propose ces échanges en donjon, quand la rage ne suit pas. En raid, ce n'est pas utile.</p>
+          <ul>
+            <li>Un point de Mur protecteur amélioré passe dans Rage concentrée.</li>
+            <li>Les 5 points d'Anticipation deviennent 3 points de Coup de tonnerre amélioré et 2 de Fracasser armure amélioré.</li>
+            <li>Rage persistante est remplacée par Colère déchaînée.</li>
+            <li>Un point de Déviation passe dans Coups téméraires.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="view" id="v-stats" role="tabpanel" aria-labelledby="t-stats">
+    <div class="grid2">
+      <div class="parch">
+        <h2>Ordre des stats au niveau 60</h2>
+        <h3>Pour la menace</h3>
+        <p><b>Compétence</b> &gt; <b>Toucher</b> &gt; <b>Agilité</b> &gt; <b>Force</b> &gt; <b>Endurance</b></p>
+        <h3 style="margin-top:8px">Pour survivre</h3>
+        <p><b>Endurance</b> &gt; <b>Armure</b> &gt; <b>Agilité</b> &gt; <b>Esquive et parade</b> &gt; <b>Défense</b></p>
+        <p>La défense passe en dernier parce que Maîtrise du blocage empêche déjà les coups critiques normaux en mêlée. L'agilité est l'une des meilleures stats, car elle donne à la fois de l'armure, de l'esquive et du critique. Icy Veins précise que ces priorités peuvent bouger avec les mises à jour de Forever.</p>
+        <p class="note">Pendant le leveling, ne te prends pas la tête : prends l'objet avec le plus d'Endurance et d'armure, puis Force et Agilité. Les seuils ci-contre ne comptent que contre les boss de raid.</p>
+      </div>
+      <div class="parch">
+        <h2>Les seuils contre un boss de niveau 63</h2>
+        <table>
+          <tbody>
+            <tr><td><b>Toucher : 8 %</b></td><td>Avec une arme et un bouclier, 8 % suffisent pour ne plus rater. Au-delà, ça ne sert plus, et le toucher n'empêche ni les esquives ni les parades. Un Heurt de bouclier raté fait moins de menace, et une attaque automatique ratée ne donne pas de rage.</td></tr>
+            <tr><td><b>Compétence : 6,5 %</b></td><td>Supprime les esquives du boss. Ce sont les points les plus rentables, car ils réduisent aussi ses parades.</td></tr>
+            <tr><td><b>Compétence : 14 %</b></td><td>Supprime aussi les parades de face. Moins de parades, c'est plus de menace et moins de coups accélérés du boss (sa « hâte de parade »).</td></tr>
+            <tr><td><b>Défense : 440</b></td><td>Immunité totale aux coups critiques.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="grid2">
+      <div class="parch">
+        <h2>Comment marche la rage</h2>
+        <ul>
+          <li>La rage d'une attaque automatique dépend de la vitesse de base de ton arme, pas de ses dégâts.</li>
+          <li>L'armure et le blocage ne réduisent pas la rage que tu reçois quand on te frappe.</li>
+          <li>Frappe héroïque et Enchaînement remplacent ta prochaine attaque automatique. Leur vrai coût inclut donc la rage que ce coup t'aurait donnée. Ne les utilise que si Heurt de bouclier, Revanche et Maîtrise du blocage restent payables.</li>
+          <li>Une attaque automatique critique donne deux fois plus de rage. Une attaque spéciale critique n'en donne pas plus.</li>
+          <li>Une esquive ou une parade annule le coup et allume Revanche, mais tu perds la rage que les dégâts t'auraient donnée. Mieux vaut équilibrer que tout miser sur l'évitement.</li>
+        </ul>
+      </div>
+      <div class="parch">
+        <h2>Ce que fait chaque stat</h2>
+        <table>
+          <tbody>
+            <tr><td><b>Force</b></td><td>1 Force donne 2 de puissance d'attaque. 20 Force donnent 1 de valeur de blocage.</td></tr>
+            <tr><td><b>Agilité</b></td><td>Critique, esquive et armure (2 d'armure par point), mais pas de puissance d'attaque. Au 60, 20 Agilité = 1 % de critique.</td></tr>
+            <tr><td><b>Endurance</b></td><td>10 points de vie par point. Protège contre tout, y compris la magie et ce qu'on ne peut pas bloquer.</td></tr>
+            <tr><td><b>Armure</b></td><td>Réduit les dégâts physiques, pas la magie.</td></tr>
+            <tr><td><b>Puissance d'attaque</b></td><td>14 points = 1 de dégâts par seconde. Augmente Revanche et Coup de tonnerre. Sur Forever, Fracasser armure fait de la menace selon ta puissance d'attaque.</td></tr>
+            <tr><td><b>Valeur de blocage</b></td><td>Plus de dégâts bloqués, et plus de dégâts pour Heurt de bouclier, qui dépend d'elle et pas de la puissance d'attaque.</td></tr>
+            <tr><td><b>Chance de blocage</b></td><td>Tu bloques plus souvent, mais Heurt de bouclier ne frappe pas plus fort.</td></tr>
+            <tr><td><b>Hâte</b></td><td>Plus d'attaques automatiques, donc plus de rage au total, mais pas plus par coup.</td></tr>
+            <tr><td><b>Critique</b></td><td>Plus de dégâts et de menace.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROTATION -->
+  <section class="view" id="v-rota" role="tabpanel" aria-labelledby="t-rota">
+    <div class="parch">
+      <p>Tu restes presque tout le temps en Posture défensive. Garde toujours assez de rage pour tes attaques principales, une interruption ou un sort défensif, et ne dépense le reste qu'en Frappe héroïque ou Enchaînement. Maîtrise du blocage ne déclenche pas le temps de recharge global : tu peux la lancer en même temps que tes attaques, sans rien retarder.</p>
+    </div>
+    <div class="grid2">
+      <div class="parch">
+        <h2>Une seule cible</h2>
+        <ol class="steps">
+          <li data-lv="1"><span><b>Garde tes bonus actifs.</b> Cri de guerre sur toi et le groupe <span class="lv">1</span>. Après le premier Heurt de bouclier ou la première Revanche, monte vite Fracasser armure à 5 <span class="lv">10</span>. Cri démoralisant si personne d'autre ne le pose <span class="lv">14</span>.</span></li>
+          <li data-lv="16"><span><b>Maîtrise du blocage</b> dès qu'elle est prête contre un ennemi au corps à corps <span class="lv">16</span>.</span></li>
+          <li data-lv="40"><span><b>Heurt de bouclier</b> dès la fin de sa recharge. Garde la rage pour lui <span class="lv">40</span>.</span></li>
+          <li data-lv="14"><span><b>Revanche</b> dès qu'un blocage, une esquive ou une parade l'allume <span class="lv">14</span>.</span></li>
+          <li data-lv="6"><span><b>Coup de tonnerre</b> quand tu as la rage <span class="lv">6</span>.</span></li>
+          <li data-lv="4"><span><b>Pourfendre</b> si le saignement n'est pas sur la cible <span class="lv">4</span>.</span></li>
+          <li data-lv="10"><span><b>Fracasser armure</b> entre les attaques principales, même une fois à 5 charges, parce qu'il continue de faire de la menace <span class="lv">10</span>.</span></li>
+          <li data-lv="1"><span><b>Frappe héroïque</b> seulement avec la rage en trop <span class="lv">1</span>.</span></li>
+        </ol>
+      </div>
+      <div class="parch">
+        <h2>Un pack</h2>
+        <p>Garde les ennemis face à toi pour bloquer et parer. Ouvre au Coup de tonnerre dès qu'ils arrivent, puis répartis tes attaques entre les cibles au lieu de tout mettre sur une seule.</p>
+        <ol class="steps">
+          <li data-lv="6"><span><b>Coup de tonnerre</b> dès que plusieurs ennemis sont à portée. Il touche 4 cibles au maximum <span class="lv">6</span>.</span></li>
+          <li data-lv="40"><span><b>Heurt de bouclier</b> sur ta cible principale, ou sur celle qui est en train de partir <span class="lv">40</span>.</span></li>
+          <li data-lv="14"><span><b>Revanche</b> sur l'ennemi qui a le plus besoin de menace <span class="lv">14</span>.</span></li>
+          <li data-lv="10"><span><b>Fracasser armure</b> réparti sur les ennemis qui manquent de menace, quand le reste est en recharge <span class="lv">10</span>.</span></li>
+          <li data-lv="20"><span><b>Enchaînement</b> à la place de Frappe héroïque dès qu'un deuxième ennemi est collé à toi et que tu as de la rage en trop <span class="lv">20</span>.</span></li>
+        </ol>
+        <p class="note" style="margin-top:8px">Si tu es tank secondaire et que la rage manque, oublie Frappe héroïque et Enchaînement : tout va dans les attaques principales.</p>
+      </div>
+    </div>
+    <div class="grid2">
+      <div class="parch">
+        <h2>La macro Heurt + blocage</h2>
+        <p>Comme Maîtrise du blocage ne déclenche pas le temps de recharge global, Icy Veins conseille de la coller devant tes attaques principales. À chaque appui, le jeu tente le blocage puis l'attaque.</p>
+        <p><code>#showtooltip Heurt de bouclier
+/cast Maîtrise du blocage
+/cast Heurt de bouclier</code></p>
+        <p class="note">Même principe avec Revanche à la place de Heurt de bouclier. Avant le niveau 40, fais-la avec Revanche.</p>
+      </div>
+      <div class="parch">
+        <h2>Les trois sorts clés en chiffres</h2>
+        <table>
+          <tbody>
+            <tr><td><b>Revanche</b></td><td>5 de rage, 5 s de recharge, après un blocage, une esquive ou une parade. Monte avec la puissance d'attaque.</td></tr>
+            <tr><td><b>Heurt de bouclier</b></td><td>20 de rage, 6 s de recharge. Monte avec la valeur de blocage, et a 50 % de chances de dissiper un effet magique sur la cible. Prioritaire sur Revanche en mono-cible.</td></tr>
+            <tr><td><b>Maîtrise du blocage</b></td><td>10 de rage, 5 s de recharge : +75 % de blocage pendant 7 s ou deux coups bloqués. Contre un pack, les deux charges partent presque tout de suite.</td></tr>
+            <tr><td><b>Fracasser armure</b></td><td>Jusqu'à 5 charges, 30 s. Fracasser armure amélioré et Rage concentrée baissent son coût.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- SORTS -->
+  <section class="view" id="v-sorts" role="tabpanel" aria-labelledby="t-sorts">
+    <div class="grid3">
+      <div class="parch">
+        <h2>Défensifs</h2>
+        <table><tbody>
+          <tr data-lv="28"><td><b>Mur protecteur</b> <span class="lv">28</span></td><td>-60 % de dégâts subis pendant 12 s, en Posture défensive avec un bouclier. Lance-le avant le gros coup, pas après. 15 min de recharge, 4 min avec le talent.</td></tr>
+          <tr data-lv="23"><td><b>Dernier rempart</b> <span class="lv">talent</span></td><td>+30 % de points de vie pendant 20 s, 3 min de recharge. Donne du temps au soigneur, mais ne réduit pas les dégâts.</td></tr>
+          <tr data-lv="20"><td><b>Représailles</b> <span class="lv">20</span></td><td>Contre-attaque tous les coups de face pendant 15 s (30 au maximum). Posture de combat, 15 min de recharge.</td></tr>
+          <tr data-lv="20"><td><b>Ivresse de la victoire</b></td><td>Attaque gratuite qui te rend 10 % de vie après avoir tué un ennemi qui rapporte de l'expérience. 20 s pour l'utiliser.</td></tr>
+        </tbody></table>
+        <p class="note" style="margin-top:6px">Témérité, Mur protecteur et Représailles ont des recharges séparées.</p>
+      </div>
+      <div class="parch">
+        <h2>Rage et urgences</h2>
+        <table><tbody>
+          <tr data-lv="10"><td><b>Rage sanguinaire</b> <span class="lv">10</span></td><td>20 % de ta vie de base contre 10 de rage tout de suite, puis 10 en 10 s. 1 min de recharge. Idéal juste avant le pull.</td></tr>
+          <tr data-lv="32"><td><b>Rage berserker</b> <span class="lv">32</span></td><td>Retire et bloque Peur et Incapacité, et donne plus de rage sur les coups reçus. Posture berserker, 30 s de recharge.</td></tr>
+          <tr data-lv="50"><td><b>Témérité</b> <span class="lv">50</span></td><td>+100 % de critique et immunité à la peur pendant 15 s, mais +20 % de dégâts subis. Posture berserker, 30 min. Risqué en tank.</td></tr>
+          <tr data-lv="4"><td><b>Charge</b> <span class="lv">4</span></td><td>Engage et donne de la rage, hors combat. En Posture défensive avec Avant-garde.</td></tr>
+          <tr data-lv="30"><td><b>Interception</b> <span class="lv">30</span></td><td>Rejoint et étourdit brièvement un ennemi en combat. Posture berserker, coûte de la rage.</td></tr>
+        </tbody></table>
+      </div>
+      <div class="parch">
+        <h2>Contrôle et menace</h2>
+        <table><tbody>
+          <tr data-lv="12"><td><b>Coup de bouclier</b> <span class="lv">12</span></td><td>Interrompt et bloque l'école de sorts 6 s. 10 de rage, 12 s de recharge : garde toujours 10 de rage pour lui.</td></tr>
+          <tr data-lv="33"><td><b>Coup traumatisant</b> <span class="lv">talent</span></td><td>Étourdit 5 s, 45 s de recharge. Pour stopper un sort quand Coup de bouclier est en recharge.</td></tr>
+          <tr data-lv="10"><td><b>Provocation</b> <span class="lv">10</span></td><td>Te met au niveau de menace du premier et force le mob à te taper. Gratuit. Enchaîne ensuite tes attaques de menace.</td></tr>
+          <tr data-lv="16"><td><b>Coup railleur</b> <span class="lv">16</span></td><td>Force un mob à te taper 6 s, en Posture de combat, sans copier la menace. Si Provocation est en recharge.</td></tr>
+          <tr data-lv="26"><td><b>Cri de défi</b> <span class="lv">26</span></td><td>Tout le pack proche te tape 6 s, sans copier la menace. Profites-en pour poser ta menace et prépare-toi à encaisser.</td></tr>
+          <tr data-lv="18"><td><b>Désarmement</b> <span class="lv">18</span></td><td>Baisse les dégâts d'un mob armé, en Posture défensive.</td></tr>
+          <tr data-lv="22"><td><b>Cri d'intimidation</b> <span class="lv">22</span></td><td>Fait fuir les ennemis proches. Attention, ils peuvent ramener d'autres packs.</td></tr>
+        </tbody></table>
+      </div>
+    </div>
+    <div class="parch">
+      <h2>Lexique : Icy Veins écrit, ton jeu affiche</h2>
+      <p class="note">La traduction française d'Icy Veins ne suit pas toujours le client. Cette page utilise les noms du jeu.</p>
+      <table><tbody>
+        <tr><td>« Coup de bouclier » (dans la rotation)</td><td><b>Heurt de bouclier</b> (Shield Slam). Le vrai Coup de bouclier du jeu est l'interruption.</td></tr>
+        <tr><td>« Vengeance »</td><td><b>Revanche</b></td></tr>
+        <tr><td>« Blocage au bouclier », « Blocage de bouclier »</td><td><b>Maîtrise du blocage</b></td></tr>
+        <tr><td>« Armure de Sunder », « Brise-armure »</td><td><b>Fracasser armure</b></td></tr>
+        <tr><td>« Déchirer »</td><td><b>Pourfendre</b></td></tr>
+        <tr><td>« Fendoir », « Fendre »</td><td><b>Enchaînement</b></td></tr>
+        <tr><td>« Mur de boucliers »</td><td><b>Mur protecteur</b></td></tr>
+        <tr><td>« Dernier combat »</td><td><b>Dernier rempart</b></td></tr>
+        <tr><td>« Rage de sang »</td><td><b>Rage sanguinaire</b></td></tr>
+        <tr><td>« Coup de commotion »</td><td><b>Coup traumatisant</b></td></tr>
+        <tr><td>« Raillerie » ou « provocation »</td><td><b>Provocation</b></td></tr>
+        <tr><td>« Coup moqueur »</td><td><b>Coup railleur</b></td></tr>
+        <tr><td>« Ruée vers la victoire »</td><td><b>Ivresse de la victoire</b></td></tr>
+        <tr><td>« Insouciance »</td><td><b>Témérité</b></td></tr>
+        <tr><td>« Compétence » (la stat)</td><td>Expertise</td></tr>
+      </tbody></table>
+    </div>
+  </section>
+
+  <div class="foot">Source : guide Guerrier Protection d'Icy Veins pour WoW Forever, d'après tes captures du 12 novembre 2026. Les noms de talents peuvent varier un peu en jeu : fie-toi à l'icône si un nom ne correspond pas.</div>
+</div>
+<script>
+(function () {
+  var tabs = document.querySelectorAll('nav.tabs button');
+  function show(id) {
+    tabs.forEach(function (t) {
+      var on = t.id === 't-' + id; t.setAttribute('aria-selected', on);
+      document.getElementById(t.getAttribute('aria-controls')).classList.toggle('on', on);
+    });
+    try { localStorage.setItem('wow-talents-tab', id); } catch (e) {}
+  }
+  tabs.forEach(function (t) { t.addEventListener('click', function () { show(t.id.slice(2)); }); });
+  try { var s = localStorage.getItem('wow-talents-tab'); if (s && document.getElementById('t-' + s)) show(s); } catch (e) {}
+
+  var lv = 14;
+  try { lv = parseInt(localStorage.getItem('wow-level'), 10) || 14; } catch (e) {}
+  document.getElementById('mylv').textContent = lv;
+  document.querySelectorAll('[data-lv]').forEach(function (el) { if (parseInt(el.dataset.lv, 10) > lv) el.classList.add('later'); });
+  var next = lv + 1, marked = false;
+  document.querySelectorAll('#lvtab tbody tr').forEach(function (tr) {
+    var a = +tr.dataset.a, b = +tr.dataset.b;
+    if (b <= lv) tr.classList.add('past');
+    if (!marked && next >= a && next <= b) { tr.classList.add('now'); marked = true; }
+  });
+})();
+</script>
+<script>if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(function(){});</script></html>
