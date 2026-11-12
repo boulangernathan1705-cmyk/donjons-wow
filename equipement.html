@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<link rel="manifest" href="manifest.json"><meta name="theme-color" content="#17110b"><link rel="apple-touch-icon" href="icon-192.png"><meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Équipement tank Guerrier</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap">
+<style>
+/* Layout: header (back link, title, level input) · rules strip · palier chips · one palier table at a time (stacked rows on phone). Parchment theme shared with the dungeon sheets. */
+:root {
+  color-scheme: dark;
+  --bg: #17110b; --panel: #efe1bf; --panel-2: #e6d3a6; --line: #b8975c; --text: #2a1c0e; --muted: #6f5536; --soft: #3d2b17;
+  --tank: #1d5fae; --quest: #8a4f0c; --ok: #2c7a43; --boss: #a3271d; --craft: #6b3fa0; --vendor: #2c6b6b;
+  --gold: #d9b45c; --gold-hi: #f3d88f; --gold-lo: #8a6a2c;
+  --title: Cinzel, Georgia, serif; --body: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { background: var(--bg); }
+body { margin: 0; color: var(--text); font-family: var(--body); font-size: 15.5px; line-height: 1.45;
+  background-image: radial-gradient(ellipse at 50% -10%, rgba(120,72,28,.35), transparent 60%), radial-gradient(ellipse at 50% 120%, rgba(0,0,0,.6), transparent 55%); background-attachment: fixed;
+  padding: 16px max(16px, env(safe-area-inset-right, 0px)) 32px max(16px, env(safe-area-inset-left, 0px)); }
+.wrap { max-width: 1180px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
+a { color: inherit; }
+.top { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: flex-end; justify-content: space-between; }
+.back { color: var(--gold); font-size: 13.5px; text-decoration: none; font-weight: 600; }
+.back:hover { color: var(--gold-hi); }
+h1 { font-family: var(--title); font-weight: 700; color: var(--gold-hi); font-size: clamp(28px, 3.6vw, 42px); line-height: 1.05; margin: 4px 0 0; text-shadow: 0 1px 0 #3a2508, 0 0 18px rgba(217,180,92,.35); text-wrap: balance; }
+.sub { color: #a8916c; margin-top: 6px; max-width: 70ch; }
+.lvl { display: flex; align-items: center; gap: 10px; background: rgba(28,19,10,.9); border: 1px solid var(--gold-lo); border-radius: 10px; padding: 8px 12px; }
+.lvl label { color: #c9b28a; font-weight: 600; }
+.lvl input { width: 70px; font: 700 18px var(--body); color: var(--text); background: #f3e7c8; border: 1px solid var(--gold-lo); border-radius: 7px; padding: 5px 8px; font-variant-numeric: tabular-nums; }
+.parch { background: linear-gradient(180deg, #f3e7c8, #ead8ad); border: 1px solid var(--gold-lo); border-radius: 8px;
+  box-shadow: inset 0 0 0 1px rgba(255,246,215,.55), inset 0 0 22px rgba(140,95,35,.22), 0 2px 8px rgba(0,0,0,.45); }
+.rules { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.rule { padding: 11px 14px; }
+.rule h3 { font-family: var(--title); font-size: 14px; margin: 0 0 4px; color: var(--quest); letter-spacing: .03em; }
+.rule p { margin: 0; color: var(--soft); font-size: 14.5px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chips button { font: 700 15px var(--body); color: #e9d6ac; background: rgba(28,19,10,.9); border: 1px solid var(--gold-lo); border-radius: 8px; padding: 8px 14px; cursor: pointer; font-variant-numeric: tabular-nums; }
+.chips button[aria-pressed="true"] { background: linear-gradient(180deg, #f3e7c8, #e3cd9a); color: var(--text); border-color: var(--gold); box-shadow: 0 0 0 2px var(--gold); }
+.chips button .me { display: block; font-size: 10.5px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--tank); }
+.chips button:focus-visible, .lvl input:focus-visible, a:focus-visible, .have input:focus-visible { outline: 2px solid var(--gold-hi); outline-offset: 2px; }
+.pal { padding: 14px 16px 10px; color-scheme: light; }
+.palhead { display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: baseline; justify-content: space-between; margin-bottom: 8px; }
+.palhead h2 { font-family: var(--title); font-size: 22px; margin: 0; }
+.palhead .cnt { color: var(--muted); font-size: 13.5px; font-variant-numeric: tabular-nums; }
+.intro { color: var(--soft); margin: 0 0 10px; }
+table { width: 100%; border-collapse: collapse; }
+th { text-align: left; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); padding: 6px 8px; border-bottom: 1px solid var(--line); }
+td { padding: 8px; border-bottom: 1px dashed rgba(138,106,44,.45); vertical-align: top; }
+tr:last-child td { border-bottom: 0; }
+td.slot { font-weight: 700; white-space: nowrap; width: 110px; }
+.item { font-weight: 600; text-decoration: none; border-bottom: 1px dotted var(--gold-lo); }
+.item:hover { color: var(--tank); }
+.en { color: var(--muted); font-size: 12.5px; }
+.src { display: flex; gap: 8px; align-items: baseline; }
+.t { flex: none; font-size: 11px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: #fff; border-radius: 5px; padding: 2px 6px; }
+.t.d { background: var(--boss); } .t.q { background: var(--quest); } .t.c { background: var(--craft); } .t.v { background: var(--vendor); }
+.lv { color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; width: 54px; }
+.have { width: 34px; text-align: center; }
+.have input { width: 18px; height: 18px; accent-color: var(--ok); }
+tr.got td:not(.have) { opacity: .5; }
+.alt { font-size: 13.5px; color: var(--muted); margin-top: 2px; }
+.foot { color: #a8916c; font-size: 12.5px; }
+.foot a { color: var(--gold); }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; color: #c9b28a; font-size: 13px; align-items: center; }
+@media (max-width: 900px) { .rules { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) {
+  .rules { grid-template-columns: minmax(0, 1fr); }
+  thead { display: none; }
+  table, tbody, tr, td { display: block; width: auto; }
+  tr { display: grid; grid-template-columns: minmax(0, 1fr) 34px; gap: 2px 8px; padding: 9px 0; border-bottom: 1px dashed rgba(138,106,44,.45); }
+  td { border: 0; padding: 0; }
+  td.slot { grid-column: 1; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); width: auto; }
+  td.have { grid-column: 2; grid-row: 1 / span 3; align-self: center; width: auto; }
+  td.lv { grid-column: 1; width: auto; font-size: 13px; }
+  td.lv::before { content: "Niveau "; }
+}
+</style>
+<div class="wrap">
+  <div class="top">
+    <div>
+      <a class="back" href="index.html">← Accueil des fiches</a>
+      <h1>Équipement du tank Guerrier</h1>
+      <div class="sub">Les meilleures pièces Horde par palier de niveau, et où les obtenir. Coche ce que tu as déjà : c'est retenu sur cet appareil.</div>
+    </div>
+    <div class="lvl"><label for="lvl">Mon niveau</label><input id="lvl" type="number" min="10" max="60" value="14" inputmode="numeric"></div>
+  </div>
+
+  <div class="rules">
+    <div class="rule parch"><h3>Toujours un bouclier</h3><p>Arme à une main et bouclier en permanence. Sur Forever, le bouclier donne de la menace et de la rage (Bastion, Spécialisation du bouclier, Heurt de bouclier).</p></div>
+    <div class="rule parch"><h3>Mailles, puis plaques</h3><p>Des mailles jusqu'au niveau 40, puis des plaques dès que tu peux. Descendre d'un type d'armure te fait perdre beaucoup de survie.</p></div>
+    <div class="rule parch"><h3>Les stats qui comptent</h3><p>Endurance et armure d'abord pour survivre, puis Force et toucher pour garder la menace. Le détail est sur la page Talents et stats.</p></div>
+    <div class="rule parch"><h3>Arme rapide, arme à distance</h3><p>Une arme à une main plutôt rapide remplit la rage plus régulièrement. L'arme à distance sert surtout pour ses stats et pour tirer les packs.</p></div>
+  </div>
+
+  <div class="chips" id="chips" role="group" aria-label="Palier de niveau"></div>
+  <section class="pal parch" id="pal" aria-live="polite"></section>
+
+  <div class="legend"><span class="t d">Donjon</span> butin d'un boss <span class="t q">Quête</span> récompense <span class="t c">Artisanat</span> à fabriquer ou acheter à l'hôtel des ventes <span class="t v">Vendeur</span> achat en ville</div>
+  <div class="foot">Sources : liste d'équipement Protection de <a href="https://timesaver.gg/tools/wow-forever/leveling-gear/warrior/protection" target="_blank" rel="noopener">timesaver.gg</a> (relevée le 6 novembre 2026), complétée par <a href="https://www.method.gg/wow-forever/wow-forever-warrior-leveling-guide-and-talents" target="_blank" rel="noopener">Method</a>, <a href="https://www.warcrafttavern.com/forever/guides/protection-warrior/" target="_blank" rel="noopener">Warcraft Tavern</a> et le butin des fiches donjon. J'ai ajouté les butins des donjons ouverts à la Horde que la liste ne met que côté Alliance. Les noms sont en anglais quand je ne suis pas sûr du nom français : chaque objet ouvre une recherche Wowhead Forever en français, qui donne le vrai nom et les stats.</div>
+</div>
+
+<script>
+(function () {
+  var WH = 'https://www.wowhead.com/forever/fr/search?q=';
+  // [slot, name shown, english name, type d|q|c|v, source, level, alternatives]
+  var P = [
+    { id: 'p13', from: 10, to: 19, label: '13 – 20', title: 'Niveaux 13 à 20 : Ragefeu, Lordaeron, Lamentations',
+      intro: "Les Ruines de Lordaeron sont la mine d'or de ce palier : arme, torse, taille et poignets sur trois boss. Prends aussi les quêtes des Tarides, elles donnent un bouclier et des bottes.",
+      rows: [
+        ['Arme', 'Meathook Slicer', 'Meathook Slicer', 'd', 'Ruines de Lordaeron, le Baron', 15, "Avant : Thun'grim's Axe, quête de classe du niveau 10 (Forged Steel)."],
+        ['Bouclier', 'Welding Shield', 'Welding Shield', 'q', 'Quête « Samophlange », Tarides', 15, "Ou le Miroir de Rath'mael (Ruines de Lordaeron), puis la Carapace de Kresh vers 20."],
+        ['Torse', 'Abomination Bones', 'Abomination Bones', 'd', 'Ruines de Lordaeron, le Baron', 16, "Vers 20 : Cuirasse d'écailles du mutant (Lamentations, Mutanus)."],
+        ['Poignets', 'Witherbite Bracers', 'Witherbite Bracers', 'd', 'Ruines de Lordaeron, Croc-Flétri', 16, "Ou Spare Part Bindings, quête « Light's Justice » (Ruines de Lordaeron)."],
+        ['Mains', "Breaker's Gauntlets", "Breaker's Gauntlets", 'q', "Quête « Breaking the Breaker », île de Zephras", 12, ''],
+        ['Taille', 'Ceinturon atrophique', 'Atrophic Girdle', 'd', 'Ruines de Lordaeron, Croc-Flétri', 16, "Gardé jusqu'au niveau 25."],
+        ['Jambes', 'Slick Deviate Leggings', 'Slick Deviate Leggings', 'q', 'Quête « Peaux déviantes », Cavernes des Lamentations', 17, ''],
+        ['Pieds', 'Vils brodequins', 'Vilewalkers', 'd', 'Ruines de Lordaeron, Viktor le Vil', 18, "Avant : Padded Lamellar Boots, quête « Stolen Booty » (Tarides)."],
+        ['Cou', "Erudite's Amulet", "Erudite's Amulet", 'q', 'Quête « Friend of the Library »', 18, 'Gardé jusque vers 30.'],
+        ['Dos', 'Glowing Lizardscale Cloak', 'Glowing Lizardscale Cloak', 'd', 'Cavernes des Lamentations, Skum', 18, ''],
+        ['Épaules', "Serpent's Shoulders", "Serpent's Shoulders", 'd', 'Cavernes des Lamentations, Dame Anacondra', 18, ''],
+        ['Anneau 1', 'Depleted Ritual Band', 'Depleted Ritual Band', 'q', 'Quête « Forgotten Loa Idols », Durotar', 10, "Vers 20 : Bounty Hunter's Ring, quête « Hezrul Bloodmark » (Tarides)."],
+        ['Anneau 2', 'Ring of Scorn', 'Ring of Scorn', 'q', "Quête « A Husband's Revenge », forêt des Pins-Argentés", 20, ''],
+        ['Distance', 'Misplaced Shooter', 'Misplaced Shooter', 'q', "Quête « Leonid's Letter », Clairières de Tirisfal", 10, "Vers 20 : Privateer Musket, quête « The Guns of Northwatch » (Tarides)."]
+      ] },
+    { id: 'p20', from: 20, to: 29, label: '20 – 30', title: 'Niveaux 20 à 30 : Ombrecroc, Brassenoire, Kraal',
+      intro: "Ombrecroc et Brassenoire t'équipent presque entièrement grâce à leurs quêtes. Au Kraal, vise la quête « A Vengeful Fate » pour la Targe marbrée, l'un des meilleurs boucliers avant le 40.",
+      rows: [
+        ['Arme', 'Hachoir du boucher', "Butcher's Cleaver", 'd', 'Ombrecroc, Tranchegriffe le Boucher', 22, "Vers 30 : Pronged Reaver (Kraal de Tranchebauge, Charlga Razorflank)."],
+        ['Bouclier', 'Carapace de Kresh', "Kresh's Back", 'd', 'Cavernes des Lamentations, Kresh', 20, "Puis Arctic Buckler, quête « Blackfathom Villainy » (Brassenoire), puis la Targe marbrée (Kraal)."],
+        ['Tête', 'Brutal Helm', 'Brutal Helm', 'q', 'Quête « Brutal Helm »', 30, 'Premier casque utile, gardé jusque vers 40.'],
+        ['Épaules', 'Bronzed Shoulderguards', 'Bronzed Shoulderguards', 'q', 'Quête « Deathstalkers in Shadowfang », Ombrecroc', 25, "Ou Mantelet du reliquaire (Excavation des Paluns, Gardien des reliques)."],
+        ['Dos', 'Peau de Fenrus', "Fenrus' Hide", 'd', 'Ombrecroc, Fenrus le Dévoreur', 24, ''],
+        ['Torse', "Cuirasse d'écailles du mutant", 'Mutant Scale Breastplate', 'd', 'Cavernes des Lamentations, Mutanus le Dévoreur', 20, "Vers 30 : Brutal Hauberk, quête « Brutal Hauberk »."],
+        ['Poignets', 'Brassards de cultiste', "Cultist's Armguards", 'q', 'Quête « Blackfathom Villainy », Brassenoire', 27, ''],
+        ['Mains', "Gantelets d'algues", 'Algae Fists', 'd', 'Profondeurs de Brassenoire, Gelihast', 25, "Vers 30 : Braced Handguards, quête « Centaur Bounty » (Désolace)."],
+        ['Taille', 'Deftkin Belt', 'Deftkin Belt', 'q', "Quête « Je'neu of the Earthen Ring », Orneval", 27, ''],
+        ['Jambes', 'Supple Bellyskin Leggings', 'Supple Bellyskin Leggings', 'd', 'Excavation des Paluns, Saltspine', 27, ''],
+        ['Pieds', 'Warsong Boots', 'Warsong Boots', 'q', 'Quête « Warsong Supplies », Orneval', 25, "Ou Treacherous Treads (Brassenoire, Lorgus Jett) et Raptorclaw Greaves (Excavation des Paluns, Shadetooth)."],
+        ['Anneau 1', 'Sceau de Sylvanas', 'Seal of Sylvanas', 'q', 'Quête « Arugal doit mourir », Ombrecroc', 27, 'Gardé jusque vers 40.'],
+        ['Anneau 2', 'Band of the Fist', 'Band of the Fist', 'q', 'Quête « Allegiance to the Old Gods », Brassenoire', 27, ''],
+        ['Distance', 'Golemsight Long Gun', 'Golemsight Long Gun', 'd', 'Excavation des Paluns, Gardien des reliques', 27, '']
+      ] },
+    { id: 'p30', from: 30, to: 39, label: '30 – 40', title: 'Niveaux 30 à 40 : Gnomeregan, Monastère écarlate',
+      intro: "Tu gardes beaucoup de pièces des quêtes du palier précédent. Les gros gains viennent du Monastère : la quête « Into The Scarlet Monastery » donne l'arme et le collier, et Mograine laisse le meilleur bouclier jusqu'au 50.",
+      rows: [
+        ['Arme', 'Pronged Reaver', 'Pronged Reaver', 'd', 'Kraal de Tranchebauge, Charlga Razorflank', 30, "Vers 40 : Sword of Omen (ci-dessous)."],
+        ['Bouclier', 'Targe marbrée', 'Marbled Buckler', 'q', 'Quête « A Vengeful Fate », Kraal de Tranchebauge', 30, "Ou Cœur d'Agamaggan (Kraal, Charlga Razorflank). Vers 38 : Égide du commandant écarlate."],
+        ['Tête', 'Brutal Helm', 'Brutal Helm', 'q', 'Quête « Brutal Helm »', 30, ''],
+        ['Cou', 'Senior Sergeant’s Insignia', "Senior Sergeant's Insignia", 'v', 'Sergent Ba’sha, Orgrimmar', 30, 'Ou Médaille d’honneur de Thermojoncteur (Gnomeregan, Cogneur de foule 9-60).'],
+        ['Torse', 'Brutal Hauberk', 'Brutal Hauberk', 'q', 'Quête « Brutal Hauberk »', 30, ''],
+        ['Mains', 'Braced Handguards', 'Braced Handguards', 'q', 'Quête « Centaur Bounty », Désolace', 32, ''],
+        ['Taille', 'Bracesteel Belt', 'Bracesteel Belt', 'q', 'Quête « Clam Bait », Désolace', 33, ''],
+        ['Jambes', 'Triprunner Dungarees', 'Triprunner Dungarees', 'q', 'Quête « Rig Wars », Gnomeregan', 30, ''],
+        ['Anneau 1', 'Sceau de Sylvanas', 'Seal of Sylvanas', 'q', 'Quête « Arugal doit mourir », Ombrecroc', 27, ''],
+        ['Anneau 2', "Nogg's Gold Ring", "Nogg's Gold Ring", 'q', "Quête « Nogg's Ring Redo », Orgrimmar", 35, 'Gardé jusque vers 50.'],
+        ['Distance', 'Blasting Hackbut', 'Blasting Hackbut', 'q', 'Quête « Questioning Reethe », marécage d’Âprefange', 35, ''],
+        ['Arme (40)', 'Sword of Omen', 'Sword of Omen', 'q', 'Quête « Into The Scarlet Monastery », Monastère écarlate', 38, ''],
+        ['Cou (40)', 'Collier de sang de dragon', "Dragon's Blood Necklace", 'q', 'Quête « Into The Scarlet Monastery », Monastère écarlate', 38, ''],
+        ['Bouclier (40)', 'Égide du commandant écarlate', 'Aegis of the Scarlet Commander', 'd', 'Monastère écarlate, Cathédrale, commandant Mograine', 38, '']
+      ] },
+    { id: 'p40', from: 40, to: 49, label: '40 – 50', title: 'Niveaux 40 à 50 : passage aux plaques',
+      intro: "Au 40, tu apprends à porter les plaques : c'est le moment de changer un maximum de pièces. Les plaques de forge et celles du Sergent Ba'sha bouchent les trous en attendant Uldaman et les Souilles.",
+      rows: [
+        ['Arme', 'Sword of Omen', 'Sword of Omen', 'q', 'Quête « Into The Scarlet Monastery », Monastère écarlate', 38, "Ou Nordic Longshank (Uldaman, Baelog)."],
+        ['Bouclier', 'Égide du commandant écarlate', 'Aegis of the Scarlet Commander', 'd', 'Monastère écarlate, Cathédrale, commandant Mograine', 38, 'Gardée jusque vers 55.'],
+        ['Tête', 'Casque de viking à cornes', 'Horned Viking Helmet', 'd', 'Uldaman, Eric « le Rapide »', 40, ''],
+        ['Cou', 'Ethereal Talisman', 'Ethereal Talisman', 'q', 'Quête « The Crown of Will », contreforts de Hautebrande', 45, 'Avant : Collier de sang de dragon (Monastère).'],
+        ['Épaules', 'Heavy Mithril Shoulder', 'Heavy Mithril Shoulder', 'c', 'Forge (mithril)', 40, ''],
+        ['Dos', "Sergeant's Cloak", "Sergeant's Cloak", 'v', 'Sergent Ba’sha, Orgrimmar', 45, ''],
+        ['Torse', 'Carapace de Tuten’kash', "Carapace of Tuten'kash", 'd', 'Souilles de Tranchebauge, Tuten’kash', 40, ''],
+        ['Poignets', "First Sergeant's Plate Bracers", "First Sergeant's Plate Bracers", 'v', 'Sergent Ba’sha, Orgrimmar', 45, 'Gardés jusqu’au 60.'],
+        ['Mains', 'Cragfists', 'Cragfists', 'd', 'Uldaman, Gardien des pierres antique', 42, 'Ou Truesilver Gauntlets (forge).'],
+        ['Taille', 'Thorium Belt', 'Thorium Belt', 'c', 'Forge (thorium)', 45, ''],
+        ['Jambes', 'Heavy Mithril Pants', 'Heavy Mithril Pants', 'c', 'Forge (mithril)', 42, ''],
+        ['Pieds', 'Shinkicker Boots', 'Shinkicker Boots', 'q', 'Quête « Deliver to MacKinley », Tanaris', 45, ''],
+        ['Anneau 1', "Nogg's Gold Ring", "Nogg's Gold Ring", 'q', "Quête « Nogg's Ring Redo », Orgrimmar", 35, ''],
+        ['Anneau 2', "Mason's Fraternity Ring", "Mason's Fraternity Ring", 'q', 'Quête « Divino-matic Rod », Zul’Farrak', 44, '']
+      ] },
+    { id: 'p50', from: 50, to: 59, label: '50 – 60', title: 'Niveaux 50 à 60 : Maraudon, Temple, Rochenoire',
+      intro: "Ce palier se gagne surtout par les quêtes des Hinterlands, de Féralas et d'Un'Goro. Le bijou de Revantusk est une vraie pièce de tank, ne le rate pas.",
+      rows: [
+        ['Arme', 'Thrash Blade', 'Thrash Blade', 'q', 'Quête « Corruption of Earth and Seed », Maraudon', 50, "Vers 55 : Hunt Tracker Blade, quête « The Remains of Trey Lightforge » (Gangrebois)."],
+        ['Bouclier', 'Aegis of Battle', 'Aegis of Battle', 'q', 'Quête « Venom to the Undercity », Hinterlands', 55, ''],
+        ['Cou', 'Woven Ivy Necklace', 'Woven Ivy Necklace', 'q', 'Quête « Wanted: Vile Priestess Hexx and Her Minions », Hinterlands', 50, ''],
+        ['Épaules', 'Emerald Peak Spaulders', 'Emerald Peak Spaulders', 'q', "Quête « Zukk'ash Report », Féralas", 50, ''],
+        ['Dos', "Sergeant's Cloak", "Sergeant's Cloak", 'v', 'Sergent Ba’sha, Orgrimmar', 45, ''],
+        ['Poignets', "First Sergeant's Plate Bracers", "First Sergeant's Plate Bracers", 'v', 'Sergent Ba’sha, Orgrimmar', 45, ''],
+        ['Jambes', 'Slagplate Leggings', 'Slagplate Leggings', 'q', 'Quête « STOLEN: Smithing Tuyere and Lookout’s Spyglass », gorge des Vents brûlants', 50, "Vers 55 : Leggings of the Ursa, quête « Deadwood of the North » (Repaire des Noiregueules)."],
+        ['Pieds', 'Shinkicker Boots', 'Shinkicker Boots', 'q', 'Quête « Deliver to MacKinley », Tanaris', 45, "Vers 55 : Cragplate Greaves, quête « Beware of Pterrordax » (cratère d'Un'Goro)."],
+        ['Bijou 1', 'Rune of the Guard Captain', 'Rune of the Guard Captain', 'q', 'Quête « Job Opening: Guard Captain of Revantusk Village », Hinterlands', 50, 'Gardé au 60.'],
+        ['Bijou 2', 'Frozen Heart of the Mountain', 'Frozen Heart of the Mountain', 'c', 'Enchantement', 50, 'Gardé au 60.']
+      ] },
+    { id: 'p60', from: 60, to: 60, label: '60', title: 'Niveau 60 : avant les raids',
+      intro: "La liste pré-raid de Forever s'appuie beaucoup sur la forge. Si tu n'es pas forgeron, ces pièces se commandent à un artisan ou s'achètent à l'hôtel des ventes. Les raids ouvrent le 9 décembre : on fera une page dédiée à ce moment-là.",
+      rows: [
+        ['Tête', 'Heaume cœur-de-lion', 'Lionheart Helm', 'c', 'Forge', 60, ''],
+        ['Cou', "Beads of Ogre Might", 'Beads of Ogre Might', 'q', "Quête « Falrin's Vendetta », Hache-Tripes", 58, ''],
+        ['Épaules', 'Imperial Plate Shoulders', 'Imperial Plate Shoulders', 'c', 'Forge', 60, ''],
+        ['Dos', 'Fel Cape', 'Fel Cape', 'c', 'Couture', 60, ''],
+        ['Torse', 'Imperial Plate Chest', 'Imperial Plate Chest', 'c', 'Forge', 60, ''],
+        ['Poignets', 'Blessed Plate Bracers', 'Blessed Plate Bracers', 'c', 'Forge', 60, ''],
+        ['Mains', 'Gantelets de diablosaure', 'Devilsaur Gauntlets', 'c', 'Travail du cuir', 60, ''],
+        ['Taille', 'Blessed Plate Belt', 'Blessed Plate Belt', 'c', 'Forge', 60, ''],
+        ['Jambes', 'Jambières titanesques', 'Titanic Leggings', 'c', 'Forge', 60, ''],
+        ['Pieds', 'Imperial Plate Boots', 'Imperial Plate Boots', 'c', 'Forge', 60, ''],
+        ['Anneau 1', 'Ring of Living Stone', 'Ring of Living Stone', 'q', 'Quête « Uncovering Past Secrets », Reflet-de-Lune', 60, ''],
+        ['Anneau 2', "Ocean's Breeze", "Ocean's Breeze", 'q', "Quête « A Hero's Reward », Azshara", 60, ''],
+        ['Bijou 1', 'Rune of the Guard Captain', 'Rune of the Guard Captain', 'q', 'Quête « Job Opening: Guard Captain of Revantusk Village », Hinterlands', 50, ''],
+        ['Bijou 2', 'Frozen Heart of the Mountain', 'Frozen Heart of the Mountain', 'c', 'Enchantement', 60, ''],
+        ['Arme', 'Greenhammer', 'Greenhammer', 'c', 'Forge', 60, ''],
+        ['Bouclier', 'Evergreen Shield', 'Evergreen Shield', 'c', 'Forge', 60, ''],
+        ['Distance', 'Core Marksman Rifle', 'Core Marksman Rifle', 'c', 'Ingénierie', 60, '']
+      ] }
+  ];
+  var T = { d: 'Donjon', q: 'Quête', c: 'Artisanat', v: 'Vendeur' };
+  var chips = document.getElementById('chips'), box = document.getElementById('pal'), input = document.getElementById('lvl');
+  var have = {}, cur = null;
+  try { have = JSON.parse(localStorage.getItem('wow-gear-have') || '{}') || {}; } catch (e) {}
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function forLevel(lv) { for (var i = 0; i < P.length; i++) if (lv >= P[i].from && lv <= P[i].to) return P[i]; return lv > 60 ? P[P.length - 1] : P[0]; }
+  function drawChips() {
+    var mine = forLevel(parseInt(input.value, 10) || 14);
+    chips.innerHTML = P.map(function (p) {
+      return '<button type="button" data-id="' + p.id + '" aria-pressed="' + (cur === p) + '">' + (p === mine ? '<span class="me">ton niveau</span>' : '') + esc(p.label) + '</button>';
+    }).join('');
+  }
+  function drawPal() {
+    var p = cur, got = 0;
+    var rows = p.rows.map(function (r, i) {
+      var key = p.id + ':' + r[2] + ':' + r[0], on = !!have[key]; if (on) got++;
+      var en = r[1] !== r[2] ? ' <span class="en">(' + esc(r[2]) + ')</span>' : '';
+      return '<tr class="' + (on ? 'got' : '') + '"><td class="slot">' + esc(r[0]) + '</td>' +
+        '<td><a class="item" href="' + WH + encodeURIComponent(r[2]) + '" target="_blank" rel="noopener">' + esc(r[1]) + '</a>' + en +
+        (r[6] ? '<div class="alt">' + esc(r[6]) + '</div>' : '') + '</td>' +
+        '<td><div class="src"><span class="t ' + r[3] + '">' + T[r[3]] + '</span><span>' + esc(r[4]) + '</span></div></td>' +
+        '<td class="lv">' + r[5] + '</td>' +
+        '<td class="have"><input type="checkbox" data-k="' + esc(key) + '" aria-label="J’ai ' + esc(r[1]) + '"' + (on ? ' checked' : '') + '></td></tr>';
+    }).join('');
+    box.innerHTML = '<div class="palhead"><h2>' + esc(p.title) + '</h2><span class="cnt">' + got + ' / ' + p.rows.length + ' obtenus</span></div>' +
+      '<p class="intro">' + esc(p.intro) + '</p>' +
+      '<table><thead><tr><th>Emplacement</th><th>Objet</th><th>Où l’obtenir</th><th>Niv.</th><th class="have">Eu</th></tr></thead><tbody>' + rows + '</tbody></table>';
+  }
+  chips.addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    cur = P.filter(function (p) { return p.id === b.dataset.id; })[0]; drawChips(); drawPal();
+  });
+  box.addEventListener('change', function (e) {
+    var k = e.target.dataset && e.target.dataset.k; if (!k) return;
+    if (e.target.checked) have[k] = 1; else delete have[k];
+    try { localStorage.setItem('wow-gear-have', JSON.stringify(have)); } catch (err) {}
+    drawPal();
+  });
+  try { var s = localStorage.getItem('wow-level'); if (s) input.value = s; } catch (e) {}
+  input.addEventListener('input', function () {
+    try { localStorage.setItem('wow-level', input.value); } catch (e) {}
+    cur = forLevel(parseInt(input.value, 10) || 14); drawChips(); drawPal();
+  });
+  cur = forLevel(parseInt(input.value, 10) || 14); drawChips(); drawPal();
+})();
+</script>
+<script>if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(function(){});</script></html>
