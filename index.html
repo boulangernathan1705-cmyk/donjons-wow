@@ -43,6 +43,7 @@ h1 { font-family: var(--display); font-weight: 800; font-size: clamp(32px, 4vw, 
 .tag.go { background: var(--tank); color: #04162b; }
 .tag.new { background: transparent; color: var(--new); border: 1px solid var(--new); }
 .tag.fac { color: var(--quest); }
+.tag.fac.h { background: #8f1d16; color: #fff; } .tag.fac.a { background: #1d4f9a; color: #fff; } .tag.fac.b { background: transparent; color: #7a5410; border: 1px solid #b8975c; }
 .foot { color: var(--muted); font-size: 12.5px; }
 .foot a { color: var(--soft); }
 @media (max-width: 560px) { .d { grid-template-columns: 56px minmax(0, 1fr); } .tags { grid-column: 2; justify-content: flex-start; } }
@@ -76,7 +77,7 @@ h1 { font-family: var(--title); font-weight: 700; color: var(--gold-hi); text-sh
     <div class="lvl"><label for="lvl">Mon niveau</label><input id="lvl" type="number" min="10" max="60" value="14" inputmode="numeric"></div>
   </header>
   <div id="bands"></div>
-  <div class="foot">Niveaux d'après l'outil de recherche de groupe du jeu, relevés par <a href="https://www.warcrafttavern.com/forever/guides/dungeons/" target="_blank" rel="noopener">Warcraft Tavern</a>. Noms français d'après <a href="https://kami-labs.fr/en/donjons-raids-wow-forever/" target="_blank" rel="noopener">Kami Labs</a>. Les donjons de l'Alliance (Salle des Thanes, Prison de Hurlevent) sont indiqués pour info.</div>
+  <div class="foot">Niveaux d'après l'outil de recherche de groupe du jeu, relevés par <a href="https://www.warcrafttavern.com/forever/guides/dungeons/" target="_blank" rel="noopener">Warcraft Tavern</a>. Noms français d'après <a href="https://kami-labs.fr/en/donjons-raids-wow-forever/" target="_blank" rel="noopener">Kami Labs</a>. Faction : les donjons situés dans une capitale (Ragefeu à Orgrimmar, Salle des Thanes à Forgefer, Prison à Hurlevent) sont réservés en pratique à la faction de la ville ; les autres sont ouverts aux deux factions. À confirmer en jeu pour les nouveaux donjons.</div>
 </div>
 
 <script>
@@ -85,39 +86,39 @@ h1 { font-family: var(--title); font-weight: 700; color: var(--gold-hi); text-sh
   var D = [
     ['rfc', 13, 18, 'Gouffre de Ragefeu', 'Orgrimmar', 'Horde'],
     ['hot', 13, 20, 'Salle des Thanes', 'Forgefer', 'Alliance', 1],
-    ['rol', 15, 22, 'Ruines de Lordaeron', 'Clairières de Tirisfal', '', 1],
-    ['wc', 15, 24, 'Cavernes des Lamentations', 'Les Tarides', ''],
-    ['dm', 17, 26, 'Les Mortemines', 'Marche de l’Ouest', ''],
-    ['sfk', 20, 30, 'Donjon d’Ombrecroc', 'Forêt des Pins-Argentés', ''],
-    ['bfd', 24, 32, 'Profondeurs de Brassenoire', 'Orneval', ''],
+    ['rol', 15, 22, 'Ruines de Lordaeron', 'Clairières de Tirisfal', 'Horde et Alliance', 1],
+    ['wc', 15, 24, 'Cavernes des Lamentations', 'Les Tarides', 'Horde et Alliance'],
+    ['dm', 17, 26, 'Les Mortemines', 'Marche de l’Ouest', 'Horde et Alliance'],
+    ['sfk', 20, 30, 'Donjon d’Ombrecroc', 'Forêt des Pins-Argentés', 'Horde et Alliance'],
+    ['bfd', 24, 32, 'Profondeurs de Brassenoire', 'Orneval', 'Horde et Alliance'],
     ['stocks', 25, 29, 'Prison de Hurlevent', 'Hurlevent', 'Alliance'],
-    ['esw', 26, 33, 'Site de fouilles des Paluns', 'Les Paluns', '', 1],
-    ['cod', 28, 35, 'Cité de Dalaran', 'Montagnes d’Alterac', '', 1],
-    ['rfk', 29, 38, 'Kraal de Tranchebauge', 'Les Tarides', ''],
-    ['gnomer', 29, 38, 'Gnomeregan', 'Dun Morogh', ''],
-    ['smgy', 30, 38, 'Monastère écarlate · Cimetière', 'Clairières de Tirisfal', ''],
-    ['smlib', 33, 41, 'Monastère écarlate · Bibliothèque', 'Clairières de Tirisfal', ''],
-    ['dc', 35, 42, 'La Cité engloutie', 'Vallée de Strangleronce', '', 1],
-    ['smarm', 36, 44, 'Monastère écarlate · Armurerie', 'Clairières de Tirisfal', ''],
-    ['rfd', 37, 46, 'Souilles de Tranchebauge', 'Les Tarides', ''],
-    ['smcath', 38, 46, 'Monastère écarlate · Cathédrale', 'Clairières de Tirisfal', ''],
-    ['kds', 40, 47, 'Bastion de Krol’dor', 'Riverglades', '', 1],
-    ['uld', 41, 51, 'Uldaman', 'Terres ingrates', ''],
-    ['zf', 44, 54, 'Zul’Farrak', 'Tanaris', ''],
-    ['mara', 46, 55, 'Maraudon', 'Désolace', ''],
-    ['alcaz', 48, 55, 'Prison de l’île d’Alcaz', 'Marécage d’Âprefange', '', 1],
-    ['st', 50, 60, 'Le Temple englouti', 'Marais des Chagrins', ''],
-    ['brd', 52, 60, 'Profondeurs de Blackrock', 'Mont Blackrock', ''],
-    ['dme', 54, 60, 'Hache-Tripes · Est', 'Féralas', ''],
-    ['lbrs', 55, 60, 'Pic Blackrock · inférieur', 'Mont Blackrock', ''],
-    ['bmh', 55, 60, 'Repaire des Noiregueules', 'Azshara', '', 1],
-    ['dmw', 56, 60, 'Hache-Tripes · Ouest', 'Féralas', ''],
-    ['dmn', 56, 60, 'Hache-Tripes · Nord', 'Féralas', ''],
-    ['terrace', 58, 60, 'Terrasse du Façonneur', 'Cratère d’Un’Goro', '', 1],
-    ['stratl', 58, 60, 'Stratholme · porte principale', 'Maleterres de l’Est', ''],
-    ['stratd', 58, 60, 'Stratholme · porte de service', 'Maleterres de l’Est', ''],
-    ['scholo', 58, 60, 'Scholomance', 'Maleterres de l’Ouest', ''],
-    ['ubrs', 59, 60, 'Pic Blackrock · supérieur', 'Mont Blackrock', '']
+    ['esw', 26, 33, 'Site de fouilles des Paluns', 'Les Paluns', 'Horde et Alliance', 1],
+    ['cod', 28, 35, 'Cité de Dalaran', 'Montagnes d’Alterac', 'Horde et Alliance', 1],
+    ['rfk', 29, 38, 'Kraal de Tranchebauge', 'Les Tarides', 'Horde et Alliance'],
+    ['gnomer', 29, 38, 'Gnomeregan', 'Dun Morogh', 'Horde et Alliance'],
+    ['smgy', 30, 38, 'Monastère écarlate · Cimetière', 'Clairières de Tirisfal', 'Horde et Alliance'],
+    ['smlib', 33, 41, 'Monastère écarlate · Bibliothèque', 'Clairières de Tirisfal', 'Horde et Alliance'],
+    ['dc', 35, 42, 'La Cité engloutie', 'Vallée de Strangleronce', 'Horde et Alliance', 1],
+    ['smarm', 36, 44, 'Monastère écarlate · Armurerie', 'Clairières de Tirisfal', 'Horde et Alliance'],
+    ['rfd', 37, 46, 'Souilles de Tranchebauge', 'Les Tarides', 'Horde et Alliance'],
+    ['smcath', 38, 46, 'Monastère écarlate · Cathédrale', 'Clairières de Tirisfal', 'Horde et Alliance'],
+    ['kds', 40, 47, 'Bastion de Krol’dor', 'Riverglades', 'Horde et Alliance', 1],
+    ['uld', 41, 51, 'Uldaman', 'Terres ingrates', 'Horde et Alliance'],
+    ['zf', 44, 54, 'Zul’Farrak', 'Tanaris', 'Horde et Alliance'],
+    ['mara', 46, 55, 'Maraudon', 'Désolace', 'Horde et Alliance'],
+    ['alcaz', 48, 55, 'Prison de l’île d’Alcaz', 'Marécage d’Âprefange', 'Horde et Alliance', 1],
+    ['st', 50, 60, 'Le Temple englouti', 'Marais des Chagrins', 'Horde et Alliance'],
+    ['brd', 52, 60, 'Profondeurs de Blackrock', 'Mont Blackrock', 'Horde et Alliance'],
+    ['dme', 54, 60, 'Hache-Tripes · Est', 'Féralas', 'Horde et Alliance'],
+    ['lbrs', 55, 60, 'Pic Blackrock · inférieur', 'Mont Blackrock', 'Horde et Alliance'],
+    ['bmh', 55, 60, 'Repaire des Noiregueules', 'Azshara', 'Horde et Alliance', 1],
+    ['dmw', 56, 60, 'Hache-Tripes · Ouest', 'Féralas', 'Horde et Alliance'],
+    ['dmn', 56, 60, 'Hache-Tripes · Nord', 'Féralas', 'Horde et Alliance'],
+    ['terrace', 58, 60, 'Terrasse du Façonneur', 'Cratère d’Un’Goro', 'Horde et Alliance', 1],
+    ['stratl', 58, 60, 'Stratholme · porte principale', 'Maleterres de l’Est', 'Horde et Alliance'],
+    ['stratd', 58, 60, 'Stratholme · porte de service', 'Maleterres de l’Est', 'Horde et Alliance'],
+    ['scholo', 58, 60, 'Scholomance', 'Maleterres de l’Ouest', 'Horde et Alliance'],
+    ['ubrs', 59, 60, 'Pic Blackrock · supérieur', 'Mont Blackrock', 'Horde et Alliance']
   ];
   var BANDS = [[10, 20, 'Niveaux 13 à 20'], [20, 30, 'Niveaux 20 à 30'], [30, 40, 'Niveaux 30 à 40'], [40, 50, 'Niveaux 40 à 50'], [50, 61, 'Niveaux 50 à 60']];
   var box = document.getElementById('bands'), input = document.getElementById('lvl');
@@ -131,7 +132,7 @@ h1 { font-family: var(--title); font-weight: 700; color: var(--gold-hi); text-sh
         var url = READY[d[0]], here = lv >= d[1] && lv <= d[2];
         var tags = '';
         if (here) tags += '<span class="tag" style="color:var(--tank)">ton niveau</span>';
-        if (d[5]) tags += '<span class="tag fac">' + esc(d[5]) + '</span>';
+        if (d[5]) tags += '<span class="tag fac ' + (d[5] === 'Horde' ? 'h' : d[5] === 'Alliance' ? 'a' : 'b') + '">' + esc(d[5]) + '</span>';
         if (d[6]) tags += '<span class="tag new">Nouveau</span>';
         tags += url ? '<span class="tag go">Ouvrir la fiche</span>' : '<span class="tag">Fiche à venir</span>';
         var inner = '<span class="lv">' + d[1] + '–' + d[2] + '</span><span><span class="nm">' + esc(d[3]) + '</span><br><span class="zn">' + esc(d[4]) + '</span></span><span class="tags">' + tags + '</span>';
