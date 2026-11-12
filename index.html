@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<link rel="manifest" href="manifest.json"><meta name="theme-color" content="#17110b"><link rel="apple-touch-icon" href="icon-192.png"><meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Donjons WoW Forever</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap">
+<style>
+/* Layout: same dark visual world as the dungeon sheets. Level filter on top, then dungeons grouped by level band. */
+:root {
+  color-scheme: dark;
+  --bg: #11151c; --panel: #1a2029; --panel-2: #222a35; --line: #2f3a49;
+  --text: #e8edf3; --muted: #97a3b3; --soft: #c5cfdb;
+  --tank: #4a9eff; --quest: #f2b632; --ok: #57c27a; --new: #b58cff; --here: #24344a;
+  --display: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --body: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { background: var(--bg); }
+body { color: var(--text); font-family: var(--body); font-size: 15.5px; line-height: 1.4;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 18px 32px; }
+.wrap { max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; gap: 18px; }
+header { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: flex-end; justify-content: space-between; }
+h1 { font-family: var(--display); font-weight: 800; font-size: clamp(32px, 4vw, 46px); line-height: 1; margin: 0; text-wrap: balance; }
+.sub { color: var(--muted); margin-top: 6px; }
+.lvl { display: flex; align-items: center; gap: 10px; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; }
+.lvl label { color: var(--muted); font-weight: 600; }
+.lvl input { width: 70px; font: 700 18px var(--body); color: var(--text); background: var(--panel-2); border: 1px solid var(--line); border-radius: 7px; padding: 5px 8px; font-variant-numeric: tabular-nums; }
+.lvl input:focus-visible, a:focus-visible { outline: 2px solid var(--tank); outline-offset: 2px; }
+.band { display: flex; align-items: center; gap: 12px; color: var(--muted); font-size: 12.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 8px; }
+.band::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+.list { display: flex; flex-direction: column; gap: 6px; }
+.d { display: grid; grid-template-columns: 74px minmax(0, 1fr) auto; gap: 14px; align-items: center; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; text-decoration: none; color: inherit; }
+.d.ready { border-color: #2f5b8c; }
+.d.ready:hover { background: var(--panel-2); }
+.d.here { background: var(--here); border-color: var(--tank); }
+.lv { font-family: var(--display); font-weight: 700; font-size: 20px; font-variant-numeric: tabular-nums; color: var(--soft); }
+.nm { font-weight: 700; font-size: 16.5px; }
+.zn { color: var(--muted); font-size: 13.5px; }
+.tags { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+.tag { font-size: 12px; font-weight: 700; padding: 3px 8px; border-radius: 6px; background: var(--panel-2); color: var(--muted); white-space: nowrap; }
+.tag.go { background: var(--tank); color: #04162b; }
+.tag.new { background: transparent; color: var(--new); border: 1px solid var(--new); }
+.tag.fac { color: var(--quest); }
+.foot { color: var(--muted); font-size: 12.5px; }
+.foot a { color: var(--soft); }
+@media (max-width: 560px) { .d { grid-template-columns: 56px minmax(0, 1fr); } .tags { grid-column: 2; justify-content: flex-start; } }
+
+/* WoW parchment theme */
+:root { --bg: #17110b; --panel: #efe1bf; --panel-2: #e6d3a6; --line: #b8975c; --text: #2a1c0e; --muted: #6f5536; --soft: #3d2b17;
+  --tank: #1d5fae; --quest: #8a4f0c; --ok: #2c7a43; --new: #6b3fa0; --here: #f6e9c6; --gold: #d9b45c; --gold-hi: #f3d88f; --gold-lo: #8a6a2c;
+  --title: Cinzel, Georgia, serif; }
+body { background-color: var(--bg); background-image: radial-gradient(ellipse at 50% -10%, rgba(120,72,28,.35), transparent 60%), radial-gradient(ellipse at 50% 120%, rgba(0,0,0,.6), transparent 55%); background-attachment: fixed; }
+h1 { font-family: var(--title); font-weight: 700; color: var(--gold-hi); text-shadow: 0 1px 0 #3a2508, 0 0 18px rgba(217,180,92,.35); }
+.sub, .foot { color: #a8916c; } .foot a { color: var(--gold); }
+.band { font-family: var(--title); color: var(--gold); letter-spacing: .1em; } .band::after { background: linear-gradient(90deg, var(--gold-lo), transparent); }
+.lvl label { color: #c9b28a; } .lvl { background: rgba(28,19,10,.9); border-color: var(--gold-lo); }
+.lvl input { background: #f3e7c8; color: var(--text); border-color: var(--gold-lo); }
+.d { background: linear-gradient(180deg, #f3e7c8, #ead8ad); border: 1px solid var(--gold-lo); border-radius: 6px;
+  box-shadow: inset 0 0 0 1px rgba(255,246,215,.55), inset 0 0 22px rgba(140,95,35,.22), 0 2px 8px rgba(0,0,0,.45); }
+.d.ready:hover { background: linear-gradient(180deg, #f8eed4, #efdfb7); }
+.d.here { border-color: var(--gold); box-shadow: 0 0 0 2px var(--gold), 0 0 16px rgba(217,180,92,.4); }
+.d:not(.ready) { opacity: .82; }
+.nm { font-family: var(--title); font-size: 16px; }
+.tag { background: rgba(120,85,40,.14); color: var(--muted); } .tag.go { background: var(--tank); color: #fff; }
+.lvl input:focus-visible, a:focus-visible { outline-color: var(--gold-hi); }
+</style>
+
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Donjons WoW Forever</h1>
+      <div class="sub">Fiches Horde, du niveau 13 au 60. Une page par donjon, avec un sélecteur Tank / Heal / DPS.</div>
+    </div>
+    <div class="lvl"><label for="lvl">Mon niveau</label><input id="lvl" type="number" min="10" max="60" value="14" inputmode="numeric"></div>
+  </header>
+  <div id="bands"></div>
+  <div class="foot">Niveaux d'après l'outil de recherche de groupe du jeu, relevés par <a href="https://www.warcrafttavern.com/forever/guides/dungeons/" target="_blank" rel="noopener">Warcraft Tavern</a>. Noms français d'après <a href="https://kami-labs.fr/en/donjons-raids-wow-forever/" target="_blank" rel="noopener">Kami Labs</a>. Les donjons de l'Alliance (Salle des Thanes, Prison de Hurlevent) sont indiqués pour info.</div>
+</div>
+
+<script>
+(function () {
+  var READY = {rfc: 'rfc.html', wc: 'wc.html', rol: 'rol.html', dm: 'dm.html', sfk: 'sfk.html', bfd: 'bfd.html', esw: 'esw.html', cod: 'cod.html', rfk: 'rfk.html', gnomer: 'gnomer.html', smgy: 'smgy.html', smlib: 'smlib.html', smarm: 'smarm.html', smcath: 'smcath.html', rfd: 'rfd.html', uld: 'uld.html', zf: 'zf.html', mara: 'mara.html', st: 'st.html', brd: 'brd.html', dme: 'dme.html', dmw: 'dmw.html', dmn: 'dmn.html', lbrs: 'lbrs.html', ubrs: 'ubrs.html', stratl: 'stratl.html', stratd: 'stratd.html', scholo: 'scholo.html'};
+  var D = [
+    ['rfc', 13, 18, 'Gouffre de Ragefeu', 'Orgrimmar', 'Horde'],
+    ['hot', 13, 20, 'Salle des Thanes', 'Forgefer', 'Alliance', 1],
+    ['rol', 15, 22, 'Ruines de Lordaeron', 'Clairières de Tirisfal', '', 1],
+    ['wc', 15, 24, 'Cavernes des Lamentations', 'Les Tarides', ''],
+    ['dm', 17, 26, 'Les Mortemines', 'Marche de l’Ouest', ''],
+    ['sfk', 20, 30, 'Donjon d’Ombrecroc', 'Forêt des Pins-Argentés', ''],
+    ['bfd', 24, 32, 'Profondeurs de Brassenoire', 'Orneval', ''],
+    ['stocks', 25, 29, 'Prison de Hurlevent', 'Hurlevent', 'Alliance'],
+    ['esw', 26, 33, 'Site de fouilles des Paluns', 'Les Paluns', '', 1],
+    ['cod', 28, 35, 'Cité de Dalaran', 'Montagnes d’Alterac', '', 1],
+    ['rfk', 29, 38, 'Kraal de Tranchebauge', 'Les Tarides', ''],
+    ['gnomer', 29, 38, 'Gnomeregan', 'Dun Morogh', ''],
+    ['smgy', 30, 38, 'Monastère écarlate · Cimetière', 'Clairières de Tirisfal', ''],
+    ['smlib', 33, 41, 'Monastère écarlate · Bibliothèque', 'Clairières de Tirisfal', ''],
+    ['dc', 35, 42, 'La Cité engloutie', 'Vallée de Strangleronce', '', 1],
+    ['smarm', 36, 44, 'Monastère écarlate · Armurerie', 'Clairières de Tirisfal', ''],
+    ['rfd', 37, 46, 'Souilles de Tranchebauge', 'Les Tarides', ''],
+    ['smcath', 38, 46, 'Monastère écarlate · Cathédrale', 'Clairières de Tirisfal', ''],
+    ['kds', 40, 47, 'Bastion de Krol’dor', 'Riverglades', '', 1],
+    ['uld', 41, 51, 'Uldaman', 'Terres ingrates', ''],
+    ['zf', 44, 54, 'Zul’Farrak', 'Tanaris', ''],
+    ['mara', 46, 55, 'Maraudon', 'Désolace', ''],
+    ['alcaz', 48, 55, 'Prison de l’île d’Alcaz', 'Marécage d’Âprefange', '', 1],
+    ['st', 50, 60, 'Le Temple englouti', 'Marais des Chagrins', ''],
+    ['brd', 52, 60, 'Profondeurs de Blackrock', 'Mont Blackrock', ''],
+    ['dme', 54, 60, 'Hache-Tripes · Est', 'Féralas', ''],
+    ['lbrs', 55, 60, 'Pic Blackrock · inférieur', 'Mont Blackrock', ''],
+    ['bmh', 55, 60, 'Repaire des Noiregueules', 'Azshara', '', 1],
+    ['dmw', 56, 60, 'Hache-Tripes · Ouest', 'Féralas', ''],
+    ['dmn', 56, 60, 'Hache-Tripes · Nord', 'Féralas', ''],
+    ['terrace', 58, 60, 'Terrasse du Façonneur', 'Cratère d’Un’Goro', '', 1],
+    ['stratl', 58, 60, 'Stratholme · porte principale', 'Maleterres de l’Est', ''],
+    ['stratd', 58, 60, 'Stratholme · porte de service', 'Maleterres de l’Est', ''],
+    ['scholo', 58, 60, 'Scholomance', 'Maleterres de l’Ouest', ''],
+    ['ubrs', 59, 60, 'Pic Blackrock · supérieur', 'Mont Blackrock', '']
+  ];
+  var BANDS = [[10, 20, 'Niveaux 13 à 20'], [20, 30, 'Niveaux 20 à 30'], [30, 40, 'Niveaux 30 à 40'], [40, 50, 'Niveaux 40 à 50'], [50, 61, 'Niveaux 50 à 60']];
+  var box = document.getElementById('bands'), input = document.getElementById('lvl');
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function draw() {
+    var lv = parseInt(input.value, 10) || 0, html = '';
+    BANDS.forEach(function (b) {
+      var rows = D.filter(function (d) { return d[1] >= b[0] && d[1] < b[1]; });
+      html += '<section style="margin-bottom:16px"><div class="band">' + b[2] + '</div><div class="list">';
+      rows.forEach(function (d) {
+        var url = READY[d[0]], here = lv >= d[1] && lv <= d[2];
+        var tags = '';
+        if (here) tags += '<span class="tag" style="color:var(--tank)">ton niveau</span>';
+        if (d[5]) tags += '<span class="tag fac">' + esc(d[5]) + '</span>';
+        if (d[6]) tags += '<span class="tag new">Nouveau</span>';
+        tags += url ? '<span class="tag go">Ouvrir la fiche</span>' : '<span class="tag">Fiche à venir</span>';
+        var inner = '<span class="lv">' + d[1] + '–' + d[2] + '</span><span><span class="nm">' + esc(d[3]) + '</span><br><span class="zn">' + esc(d[4]) + '</span></span><span class="tags">' + tags + '</span>';
+        var cls = 'd' + (url ? ' ready' : '') + (here ? ' here' : '');
+        html += url ? '<a class="' + cls + '" href="' + url + '">' + inner + '</a>' : '<div class="' + cls + '">' + inner + '</div>';
+      });
+      html += '</div></section>';
+    });
+    box.innerHTML = html;
+  }
+  try { var s = localStorage.getItem('wow-level'); if (s) input.value = s; } catch (e) {}
+  input.addEventListener('input', function () { try { localStorage.setItem('wow-level', input.value); } catch (e) {} draw(); });
+  draw();
+})();
+</script>
+<script>if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(function(){});</script></html>
