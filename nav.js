@@ -6,7 +6,8 @@
     ['groupe.html', 'Groupe et marques', 'Marques, annonces, pull'],
     ['conso.html', 'Consommables et métiers', 'Potions, Minage, Forge'],
     ['parcours.html', 'Parcours 1 à 60', 'Sorts, donjons et armes par palier'],
-    ['barres.html', 'Barres de sorts', 'Disposition du 60, macros, Stream Deck']
+    ['barres.html', 'Barres de sorts', 'Disposition du 60, macros, Stream Deck'],
+    ['macros.html', 'Macros', 'Les macros du quotidien : rotation et tanking']
   ];
   var D = [
     ['rfc', 13, 18, 'Gouffre de Ragefeu'],
