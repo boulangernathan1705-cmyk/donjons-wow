@@ -3,9 +3,10 @@
   var G = [
     ['equipement.html', 'Équipement', 'Les meilleures pièces par palier'],
     ['talents.html', 'Talents et rotation', 'Rotation, talents, sorts et stats'],
-    ['groupe.html', 'Groupe et marques', 'Marques, annonces, Stream Deck'],
+    ['groupe.html', 'Groupe et marques', 'Marques, annonces, pull'],
     ['conso.html', 'Consommables et métiers', 'Potions, Minage, Forge'],
-    ['parcours.html', 'Parcours 1 à 60', 'Sorts, donjons et armes par palier']
+    ['parcours.html', 'Parcours 1 à 60', 'Sorts, donjons et armes par palier'],
+    ['barres.html', 'Barres de sorts', 'Disposition du 60, macros, Stream Deck']
   ];
   var D = [
     ['rfc', 13, 18, 'Gouffre de Ragefeu'],

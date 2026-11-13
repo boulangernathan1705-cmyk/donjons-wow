@@ -226,26 +226,9 @@ code { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-si
 
   <!-- STREAM DECK -->
   <section class="view" id="v-deck" role="tabpanel" aria-labelledby="t-deck">
-    <div class="grid2">
-      <div style="display:flex;flex-direction:column;gap:10px;min-width:0">
-        <div class="deck" aria-label="Disposition proposée pour un Stream Deck de 15 touches">
-          <div class="k" data-k="skull"></div><div class="k" data-k="cross"></div><div class="k" data-k="moon"></div><div class="k" data-k="square"></div><div class="k" data-k="diamond"></div>
-          <div class="k" data-k="star"></div><div class="k" data-k="triangle"></div><div class="k" data-k="circle"></div><div class="k sys"><span class="big">✕</span>Effacer<small>Ctrl Maj F9</small></div><div class="k sys"><span class="big">✓</span>Appel prêt<small>/readycheck</small></div>
-          <div class="k say2"><span class="big">💬</span>Salut tank<small>annonce</small></div><div class="k say2"><span class="big">💬</span>Contrôles<small>annonce</small></div><div class="k say2"><span class="big">⏳</span>Pull 3 s<small>annonce</small></div><div class="k say2"><span class="big">💧</span>Pause mana<small>annonce</small></div><div class="k say2"><span class="big">⚑</span>Boss<small>annonce</small></div>
-        </div>
-        <p class="note">Disposition pour le Stream Deck classique (15 touches). Sur un Mini (6 touches), garde crâne, croix, lune, carré, effacer et pull 3 s. Sur un XL, ajoute une rangée d'annonces de donjon.</p>
-      </div>
-      <div class="parch">
-        <h2>Le mettre en place</h2>
-        <h3>1 · Dans le jeu : des raccourcis pour les marques</h3>
-        <p>Options › Raccourcis, section Ciblage : chaque marque a sa ligne « Attribuer l'icône de raid ». Donne-leur des touches que tu n'utilises jamais : <b>Ctrl + Maj + F1</b> pour le crâne jusqu'à <b>F8</b>, comme sur le schéma. La marque se pose sur ta cible.</p>
-        <p class="note">Pour marquer le mob sous ta souris sans le cibler, fais plutôt une macro par marque et lie-la à la même touche, par exemple pour le crâne : <code>/tm [@mouseover,exists][] 8</code>. Numéros : 8 crâne, 7 croix, 6 carré, 5 lune, 4 triangle, 3 losange, 2 cercle, 1 étoile. Pour la touche Effacer : <code>/tm [@mouseover,exists][] 0</code>. À tester en jeu, la syntaxe peut varier sur Forever.</p>
-        <h3 style="margin-top:10px">2 · Dans le Stream Deck : une action Raccourci par marque</h3>
-        <p>Glisse l'action <b>Système › Raccourci clavier</b> sur la touche, et tape la combinaison (Ctrl + Maj + F1…). Mets l'image de la marque comme icône : les 8 icônes de ce schéma conviennent.</p>
-        <h3 style="margin-top:10px">3 · Les annonces : une action Multi-actions</h3>
-        <p>Une touche = <b>Entrée</b> (ouvre le chat), puis l'action <b>Texte</b> avec ton message et l'option « Envoyer Entrée ». Commence le texte par <code>/g </code> pour le groupe. Les textes sont dans l'onglet Pull et annonces.</p>
-        <p class="note">« Pull 3 s » : <code>/g Pull dans 3 secondes</code>. Si tu installes un addon de boss (Deadly Boss Mods), <code>/pull 3</code> affiche un vrai compte à rebours pour tout le groupe.</p>
-      </div>
+    <div class="parch">
+      <h2>Le Stream Deck a déménagé</h2>
+      <p>La configuration du Stream Deck a été refaite, plus simple, avec tes marques, tes potions et tes urgences : elle est maintenant sur la page <a href="barres.html#deck" style="color:var(--quest);font-weight:700">Barres de sorts › Stream Deck</a>.</p>
     </div>
   </section>
 
