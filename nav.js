@@ -4,7 +4,8 @@
     ['equipement.html', 'Équipement', 'Les meilleures pièces par palier'],
     ['talents.html', 'Talents et rotation', 'Rotation, talents, sorts et stats'],
     ['groupe.html', 'Groupe et marques', 'Marques, annonces, Stream Deck'],
-    ['conso.html', 'Consommables, métiers, addons', 'Potions, Minage, Forge, addons']
+    ['conso.html', 'Consommables, métiers, addons', 'Potions, Minage, Forge, addons'],
+    ['parcours.html', 'Parcours 1 à 60', 'Sorts, donjons et armes par palier']
   ];
   var D = [
     ['rfc', 13, 18, 'Gouffre de Ragefeu'],

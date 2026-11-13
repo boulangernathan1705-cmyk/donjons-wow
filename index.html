@@ -69,13 +69,15 @@ h1 { font-family: var(--title); font-weight: 700; color: var(--gold-hi); text-sh
 .lvl input:focus-visible, a:focus-visible { outline-color: var(--gold-hi); }
 </style>
 <style id="guides-css">
-.guides { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.guides { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
 .g { display: flex; flex-direction: column; gap: 2px; padding: 10px 14px; border-radius: 6px; text-decoration: none; color: var(--text); background: linear-gradient(180deg, #f3e7c8, #ead8ad); border: 1px solid var(--gold-lo); box-shadow: inset 0 0 0 1px rgba(255,246,215,.55), inset 0 0 22px rgba(140,95,35,.22), 0 2px 8px rgba(0,0,0,.45); }
 .g b { font-family: var(--title); font-size: 15.5px; } .g span { color: var(--muted); font-size: 13.5px; }
 a.g:hover { background: linear-gradient(180deg, #f8eed4, #efdfb7); } .g.off { opacity: .7; } .g em { font-style: normal; font-size: 12px; font-weight: 700; color: var(--tank); }
-@media (max-width: 900px) { .guides { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 1000px) { .guides { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 700px) { .guides { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 480px) { .guides { grid-template-columns: minmax(0, 1fr); } }
 </style>
+
 
 
 
@@ -88,7 +90,7 @@ a.g:hover { background: linear-gradient(180deg, #f8eed4, #efdfb7); } .g.off { op
     </div>
     <div class="lvl"><label for="lvl">Mon niveau</label><input id="lvl" type="number" min="10" max="60" value="14" inputmode="numeric"></div>
   </header>
-        <!-- guides:start --><section><div class="band">Guides du tank Guerrier</div><div class="guides"><a class="g" href="equipement.html"><b>Équipement</b><span>Les meilleures pièces par palier, et où les obtenir</span></a><a class="g" href="talents.html"><b>Talents et rotation</b><span>Rotation, arbres de talents du jeu, sorts et stats</span></a><a class="g" href="groupe.html"><b>Groupe et marques</b><span>Marquer les cibles, annonces, config Stream Deck</span></a><a class="g" href="conso.html"><b>Consommables, métiers, addons</b><span>Potions, Minage et Forge, addons, or et macros</span></a></div></section><!-- guides:end -->
+          <!-- guides:start --><section><div class="band">Guides du tank Guerrier</div><div class="guides"><a class="g" href="equipement.html"><b>Équipement</b><span>Les meilleures pièces par palier, et où les obtenir</span></a><a class="g" href="talents.html"><b>Talents et rotation</b><span>Rotation, arbres de talents du jeu, sorts et stats</span></a><a class="g" href="groupe.html"><b>Groupe et marques</b><span>Marquer les cibles, annonces, config Stream Deck</span></a><a class="g" href="conso.html"><b>Consommables, métiers, addons</b><span>Potions, Minage et Forge, addons, or et macros</span></a><a class="g" href="parcours.html"><b>Parcours 1 à 60</b><span>Sorts appris, donjons et armes, palier par palier</span></a></div></section><!-- guides:end -->
   <div id="bands"></div>
   <div class="foot">Niveaux d'après l'outil de recherche de groupe du jeu, relevés par <a href="https://www.warcrafttavern.com/forever/guides/dungeons/" target="_blank" rel="noopener">Warcraft Tavern</a>. Noms français d'après <a href="https://kami-labs.fr/en/donjons-raids-wow-forever/" target="_blank" rel="noopener">Kami Labs</a>. Faction : les donjons situés dans une capitale (Ragefeu à Orgrimmar, Salle des Thanes à Forgefer, Prison à Hurlevent) sont réservés en pratique à la faction de la ville ; les autres sont ouverts aux deux factions. À confirmer en jeu pour les nouveaux donjons.</div>
 </div>
