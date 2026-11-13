@@ -158,17 +158,14 @@ code { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-si
 <div class="wrap">
   <div>
     <a class="back" href="index.html">← Accueil des fiches</a>
-    <h1>Consommables, métiers et addons</h1>
-    <div class="sub">Ce qu'un tank Guerrier emporte en donjon, ta montée Minage et Forge, les addons qui marchent vraiment sur Forever, l'or et les réputations. Ton niveau : <b id="mylv" style="color:var(--gold-hi)">14</b>.</div>
+    <h1>Consommables et métiers</h1>
+    <div class="sub">Ce qu'un tank Guerrier emporte en donjon, et ta montée Minage et Forge. Ton niveau : <b id="mylv" style="color:var(--gold-hi)">14</b>.</div>
   </div>
 
   <nav class="tabs" role="tablist" aria-label="Sections">
     <button role="tab" id="t-conso" aria-controls="v-conso" aria-selected="true">Consommables</button>
     <button role="tab" id="t-mine" aria-controls="v-mine" aria-selected="false">Minage</button>
     <button role="tab" id="t-forge" aria-controls="v-forge" aria-selected="false">Forge</button>
-    <button role="tab" id="t-addons" aria-controls="v-addons" aria-selected="false">Addons</button>
-    <button role="tab" id="t-gold" aria-controls="v-gold" aria-selected="false">Or et réputations</button>
-    <button role="tab" id="t-macros" aria-controls="v-macros" aria-selected="false">Macros</button>
   </nav>
 
   <!-- CONSOMMABLES -->
@@ -392,164 +389,6 @@ code { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-si
     </div>
   </section>
 
-  <!-- ADDONS -->
-  <section class="view" id="v-addons" role="tabpanel" aria-labelledby="t-addons">
-    <div class="parch warn">
-      <h2>À savoir avant d'installer</h2>
-      <p>Forever tourne sur le client moderne de WoW, pas sur le client Classic. Les addons Classic ne se chargent pas : prends toujours la version marquée « Forever » ou compatible. WeakAuras, OmniBar et BigDebuffs ne marchent plus. Le journal de combat est fermé aux addons, et certaines valeurs (menace, vie, auras) sont cachées en combat : les compteurs de menace peuvent être moins fiables qu'avant. Un seul addon de carte à la fois.</p>
-    </div>
-    <div class="parch">
-      <h2>Les indispensables</h2>
-      <div class="addons">
-        <div class="ad must"><b>BugSack + BugGrabber</b><p>Attrape les erreurs des autres addons au lieu de les afficher en plein combat.</p></div>
-        <div class="ad must"><b>Cooldown Manager</b><span class="nat">intégré au jeu</span><p>À activer dans Options, Gameplay Enhancement. Affiche tes recharges importantes (Mur protecteur, Dernier rempart…).</p></div>
-        <div class="ad must"><b>Deadly Boss Mods</b><p>Alertes de boss. Le seul avec des modules Forever (BigWigs n'en a pas).</p></div>
-        <div class="ad must"><b>Questie</b><p>Les quêtes et leurs objectifs sur la carte. Prends la version Forever.</p></div>
-        <div class="ad must"><b>ThreatClassic2</b><p>Compteur de menace. Teste-le en donjon : la menace peut être cachée en combat sur Forever.</p></div>
-        <div class="ad must"><b>Details!</b><p>Compteur de dégâts. Passe en version alpha si ses fenêtres restent vides.</p></div>
-      </div>
-    </div>
-    <div class="grid2">
-      <div class="parch">
-        <h2>Pour ton tank</h2>
-        <table><tbody>
-          <tr><td><b>Threat Plates</b></td><td>Barres de vie des ennemis colorées selon qui a l'aggro. À tester, pour la même raison que la menace cachée.</td></tr>
-          <tr><td><b>ForeverThreat</b></td><td>Autre compteur de menace, si ThreatClassic2 te déçoit.</td></tr>
-          <tr><td><b>Cooldown Manager Centered</b></td><td>Rend le gestionnaire de recharges du jeu plus lisible.</td></tr>
-          <tr><td><b>TellMeWhen</b></td><td>Suivi de tes auras et recharges : par exemple Maîtrise du blocage ou Fracasser armure à 5.</td></tr>
-          <tr><td><b>tullaCTC</b></td><td>Chiffres sur les recharges de tes boutons.</td></tr>
-          <tr><td><b>ForeverAuras</b>, <b>Musca Auras</b></td><td>Remplaçants de WeakAuras, encore jeunes.</td></tr>
-          <tr><td><b>Nova Spell Rank Checker</b></td><td>Te prévient quand un sort de ta barre est à un ancien rang.</td></tr>
-          <tr><td><b>GTFO</b></td><td>Alerte sonore quand tu restes dans une zone de dégâts. Partiellement compatible.</td></tr>
-        </tbody></table>
-      </div>
-      <div class="parch">
-        <h2>Confort, métiers et or</h2>
-        <table><tbody>
-          <tr><td><b>SkillUp Forever</b></td><td>Chance de monter, coût et liste de courses dans la fenêtre de métier. Parfait pour ta Forge.</td></tr>
-          <tr><td><b>ForeverMapNotes</b>, <b>FarmMap V2</b></td><td>Gisements de minerai sur la carte (onglet Minage).</td></tr>
-          <tr><td><b>Baganator</b> ou <b>Bagnon</b></td><td>Tous tes sacs en une fenêtre.</td></tr>
-          <tr><td><b>Auctionator</b></td><td>Hôtel des ventes et import de listes de courses (cité par le guide Forge de Kami Labs, vérifie la version Forever).</td></tr>
-          <tr><td><b>Extended Vendor Forever</b></td><td>Fenêtre de marchand agrandie.</td></tr>
-          <tr><td><b>Bartender4</b>, <b>Dominos</b></td><td>Barres d'action personnalisables.</td></tr>
-          <tr><td><b>ElvUI</b>, <b>ForeverUI</b>, <b>ClassicUI Forever</b></td><td>Interfaces complètes. ClassicUI redonne le look de Classic.</td></tr>
-          <tr><td><b>Mode Édition</b></td><td>Intégré au jeu (Échap, Mode Édition) : déplace les éléments de l'interface sans addon.</td></tr>
-        </tbody></table>
-      </div>
-    </div>
-  </section>
-
-  <!-- OR ET REPUTATIONS -->
-  <section class="view" id="v-gold" role="tabpanel" aria-labelledby="t-gold">
-    <div class="grid2">
-      <div class="parch">
-        <h2>Faire de l'or avec Minage et Forge</h2>
-        <ul>
-          <li><b>Vends tes barres plutôt que ton minerai</b> quand le prix est meilleur : la fonte te fait aussi monter le Minage.</li>
-          <li><b>Thorium et mithril</b> : les forgerons en ont besoin par centaines pour monter (plus de 1 000 barres de thorium jusqu'à 300). Ça se vend bien.</li>
-          <li><b>Pierres à aiguiser et de lest denses</b> : consommées en permanence par les guerriers, voleurs et chasseurs dès l'ouverture des raids.</li>
-          <li><b>Pointes de bouclier</b> : peu de forgerons les font, les tanks les cherchent.</li>
-          <li>Garde de l'or pour tes sorts : apprendre toutes tes techniques du niveau 1 au 60 coûte environ 207 pièces d'or, plus ta monture.</li>
-        </ul>
-        <p class="note">Le guide d'or de Kami Labs est réservé à leurs abonnés : ces conseils sont les miens, à adapter aux prix de ton serveur.</p>
-      </div>
-      <div class="parch">
-        <h2>La Faveur marchande</h2>
-        <p>C'est une monnaie nouvelle sur Forever. On la gagne en livrant des caisses à deux organisations de marchands, et on la dépense chez huit marchands qui vendent des recettes de métier.</p>
-        <p>Côté Horde, les marchands sont à <b>la Croisée</b>, dans Les Tarides.</p>
-        <p>Pour la Forge : 61 recettes, 150 de Faveur pour celles d'apprenti, 750 compagnon, 600 expert, 2 010 artisan.</p>
-      </div>
-    </div>
-    <div class="parch">
-      <h2>Les réputations utiles à un tank Horde</h2>
-      <p class="note">Liste de Classic, à confirmer sur Forever au fil des mises à jour. Aucune page réputations Horde n'existe encore chez Kami Labs.</p>
-      <table><tbody>
-        <tr><td><b>Confrérie du Thorium</b></td><td>Gorge des Vents brûlants. Pour un forgeron, c'est la plus importante : recettes en sombrefer et pièces de résistance au feu pour le Cœur du Magma.</td></tr>
-        <tr><td><b>Aube d'argent</b></td><td>Maleterres. Se monte en faisant Stratholme et Scholomance, donne des enchantements de tête et de jambes.</td></tr>
-        <tr><td><b>Les Grumegueules</b></td><td>Gangrebois et Berceau-de-l'Hiver. Passage entre les zones, et recettes.</td></tr>
-        <tr><td><b>Les Hydraxiens</b></td><td>Azshara. Nécessaire pour éteindre les runes du Cœur du Magma.</td></tr>
-        <tr><td><b>Orgrimmar et ta capitale</b></td><td>Réductions chez les marchands et monture.</td></tr>
-      </tbody></table>
-    </div>
-  </section>
-
-  <!-- MACROS -->
-  <section class="view" id="v-macros" role="tabpanel" aria-labelledby="t-macros">
-    <div class="parch warn">
-      <h2>Pourquoi des macros sur Forever</h2>
-      <p>Un sort posé seul sur ta barre ne passe pas au nouveau rang quand tu l'achètes chez le maître de classe. Une macro « /cast Nom du sort » sans rang lance toujours ton rang le plus haut. Et un sort appris n'est plus ajouté tout seul à tes barres.</p>
-    </div>
-    <div class="macros">
-      <div class="parch"><h3>Mur protecteur, même hors posture</h3><pre class="code">#showtooltip Mur protecteur
-/cast [nostance:2] Posture défensive
-/cast Mur protecteur</pre><p class="note">Repasse en Posture défensive si besoin, puis lance le Mur.</p></div>
-      <div class="parch"><h3>Heurt de bouclier, sinon Vengeance</h3><pre class="code">#showtooltip
-/cast [nostance:2] Posture défensive
-/cast Heurt de bouclier
-/cast Vengeance</pre><p class="note">Avant le niveau 40, seule Vengeance part : la macro marche dès maintenant.</p></div>
-      <div class="parch"><h3>Heurt + Maîtrise du blocage (Icy Veins)</h3><pre class="code">#showtooltip Heurt de bouclier
-/cast Maîtrise du blocage
-/cast Heurt de bouclier</pre><p class="note">Avant le niveau 40, remplace Heurt de bouclier par Vengeance.</p></div>
-      <div class="parch"><h3>Fracasser armure sur la cible survolée</h3><pre class="code">#showtooltip
-/startattack
-/cast [@mouseover,harm,nodead][] Fracasser armure</pre><p class="note">Pratique pour poser de la menace sur un deuxième mob sans changer de cible.</p></div>
-      <div class="parch"><h3>Provocation sur la cible survolée</h3><pre class="code">#showtooltip
-/cast [@mouseover,harm,nodead][] Provocation</pre><p class="note">Survole le mob qui tape ton soigneur dans les cadres de vie ou à l'écran.</p></div>
-      <div class="parch"><h3>Coup de bouclier sur la cible survolée</h3><pre class="code">#showtooltip
-/cast [@mouseover,harm,nodead][] Coup de bouclier</pre><p class="note">Interrompre un lanceur de sorts sans perdre ta cible.</p></div>
-      <div class="parch"><h3>Coup de bouclier depuis la posture berserker</h3><pre class="code">#showtooltip
-/cast [stance:3] Posture défensive
-/cast Coup de bouclier</pre><p class="note">Change de posture si tu es en berserker, puis interrompt.</p></div>
-      <div class="parch"><h3>Cible suivante et attaque</h3><pre class="code">#showtooltip
-/cleartarget [dead]
-/targetenemy [noharm]
-/startattack</pre><p class="note">À confirmer en jeu, d'après Kami Labs.</p></div>
-    </div>
-<!--MOBA:macros-->
-    <div class="parch warn moba" style="margin-top:14px">
-      <h2>Les macros de Cliptis et KallTorak</h2>
-      <p>Reprises de leurs guides Mobalytics avec les noms du client français. Une macro ne joue pas à ta place : elle regroupe plusieurs actions sur un seul bouton, que tu appuies une fois par action. KallTorak précise que l'attaque automatique se lance déjà toute seule sur Forever, donc « /startattack » n'est plus obligatoire.</p>
-    </div>
-    <div class="macros moba">
-<div class="parch"><h3>Charge, puis Posture défensive (Cliptis)</h3><pre class="code">#showtooltip Charge
-/cast [nocombat,nostance:1] Posture de combat
-/cast [nocombat] Charge
-/cast [combat,nostance:2] Posture défensive
-/startattack</pre><p class="note">Hors combat : passe en Posture de combat et charge. En combat : te remet en Posture défensive. Après Avant-garde (25), la Charge marche aussi en Posture défensive.</p></div>
-<div class="parch"><h3>Vengeance avec Maîtrise du blocage (Cliptis)</h3><pre class="code">#showtooltip Vengeance
-/cast [nostance:2] Posture défensive
-/cast Maîtrise du blocage
-/cast Vengeance
-/startattack</pre><p class="note">Maîtrise du blocage ne déclenche pas le temps de recharge global, donc les deux partent sur le même bouton.</p></div>
-<div class="parch"><h3>Ivresse de la victoire sur une cible vivante (Cliptis)</h3><pre class="code">#showtooltip Ivresse de la victoire
-/targetenemy [noexists][dead]
-/cast Ivresse de la victoire</pre><p class="note">Si ta cible est morte, prend l'ennemi le plus proche pour pouvoir lancer le soin.</p></div>
-<div class="parch"><h3>Coup railleur (Cliptis, KallTorak)</h3><pre class="code">#showtooltip Coup railleur
-/cast [nostance:1] Posture de combat
-/cast Coup railleur</pre><p class="note">Provocation de secours quand Provocation est en recharge. Pense à revenir en Posture défensive juste après.</p></div>
-<div class="parch"><h3>Dernier rempart puis Mur protecteur (Cliptis)</h3><pre class="code">#showtooltip
-/cast [nostance:2] Posture défensive
-/cast [equipped:Boucliers] Dernier rempart
-/cast [equipped:Boucliers] Mur protecteur</pre><p class="note">Ton bouton d'urgence : la première pression lance Dernier rempart, la suivante Mur protecteur.</p></div>
-<div class="parch"><h3>Représailles (Cliptis, KallTorak)</h3><pre class="code">#showtooltip Représailles
-/cast Posture de combat
-/cast Représailles
-/cast Posture défensive</pre><p class="note">Appuie trois fois (posture, sort, retour en défensive), puis enchaîne avec la macro Vengeance. Pour les très gros pulls.</p></div>
-<div class="parch"><h3>Fulgurance (KallTorak)</h3><pre class="code">#showtooltip Fulgurance
-/cast Posture de combat
-/cast Fulgurance</pre><p class="note">Change de posture et lance Fulgurance sur le même bouton.</p></div>
-<div class="parch"><h3>Témérité (KallTorak)</h3><pre class="code">#showtooltip Témérité
-/cast Posture berserker
-/cast Témérité</pre><p class="note">Menace à l'engagement, seulement quand les dégâts reçus sont sous contrôle.</p></div>
-<div class="parch"><h3>Désarmement (KallTorak)</h3><pre class="code">#showtooltip Désarmement
-/cast Posture défensive
-/cast Désarmement</pre><p class="note">Sur un ennemi qui tape fort avec une arme.</p></div>
-<div class="parch"><h3>Maîtrise du blocage (KallTorak)</h3><pre class="code">#showtooltip Maîtrise du blocage
-/cast Posture défensive
-/cast Maîtrise du blocage</pre><p class="note">Te remet en Posture défensive si besoin avant de bloquer.</p></div>
-    </div>
-<!--/MOBA:macros-->
-  </section>
 
   <div class="foot">Sources : pages Métiers, Guide de la Forge, Guide du Minage, Addons, Faveur marchande, Macros et notes du patch du 2 novembre de Kami Labs (lues le 12 novembre 2026), simulation tank de Kami Labs pour les potions. Consommables par palier et réputations : mes recommandations d'après WoW Classic, à confirmer sur Forever.</div>
 </div>
