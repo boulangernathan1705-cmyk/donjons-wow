@@ -6,6 +6,8 @@
     ['groupe.html', 'Groupe et marques', 'Marques, annonces, pull'],
     ['conso.html', 'Consommables et métiers', 'Potions, Minage, Forge'],
     ['parcours.html', 'Parcours 1 à 60', 'Sorts, donjons et armes par palier'],
+    ['leveling.html', 'Leveling 10 à 60', 'Le build de montée Kami Labs, point par point'],
+    ['donjon60.html', 'Niveau 60 · donjons', 'Builds, ouverture, priorité, BiS et enchantements'],
     ['barres.html', 'Barres de sorts', 'Disposition du 60, macros, Stream Deck'],
     ['macros.html', 'Macros', 'Les macros du quotidien : rotation et tanking']
   ];
